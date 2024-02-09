@@ -248,10 +248,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         // Create a new JSZip instance
         var zip = new JSZip();
 
-        zip.file("mod.info", '; This is a template mod descriptor file
-; See README.txt for details
-; Comments start with ';'
-{mod
+        zip.file("mod.info", '{mod
     ; name of your mod
     {name "Better Conquest"}
     
@@ -265,7 +262,6 @@ document.getElementById('generateMod').addEventListener('click', function() {
     {minGameVersion "1.0.0"}
     ; latest game version your mod has been tested on and is compatible with (you can omit this number to make the mod work on future versions if you are sure updates to the vanilla game will not break it)
     {maxGameVersion "69.420.69"}
-
 }');
     
         const unitFolder = zip.folder("resource").("set").("multiplayer").("units").("conquest");
