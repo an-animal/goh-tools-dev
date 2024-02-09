@@ -198,7 +198,7 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
 
 // Placeholder for Generate button functionality
 document.getElementById('generateMod').addEventListener('click', function() {
-        .then(response => {
+        fetch('units_ger.set').then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
