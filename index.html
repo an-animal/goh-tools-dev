@@ -247,13 +247,31 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         // Create a new JSZip instance
         var zip = new JSZip();
+
+        zip.file("mod.info", '; This is a template mod descriptor file
+; See README.txt for details
+; Comments start with ';'
+{mod
+    ; name of your mod
+    {name "Better Conquest"}
     
-        // Add your units file string to the zip
-        // "unitsFile.set" is the name of the new file in the zip
-        // Replace it with whatever filename you want the content to have
-        zip.file(unitsFileName, unitsFileOutput);
+    ; mod tags
+    ;{tags ""}
+
+    ; description of your mod
+    {desc "This mod slows the pace of conquest research for the enemy AI."}
+
+    ; oldest game version your mod is still compatible with (when in doubt, enter the latest version you tested)
+    {minGameVersion "1.0.0"}
+    ; latest game version your mod has been tested on and is compatible with (you can omit this number to make the mod work on future versions if you are sure updates to the vanilla game will not break it)
+    {maxGameVersion "69.420.69"}
+
+}');
     
-        // Generate the zip file and trigger a download
+        const unitFolder = zip.folder("resource").("set").("multiplayer").("units").("conquest");
+        unitFolder.file(unitsFileName, unitsFileOutput);
+
+        // Generate the zip file and trigger a dwnload
         zip.generateAsync({type:"blob"})
             .then(function(content) {
                 // Use FileSaver to save the file
