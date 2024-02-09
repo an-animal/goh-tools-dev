@@ -166,6 +166,36 @@ function generateNewResearchTree(userParams, factionParams) {
     return techStages;
 }
 
+function buildUnitsFileString(techStages, unitsFile, ignoredTechs, replacementMap) {
+    // Replace all min_stage and max_stage occurrences with '99'
+    let unitsFilePrepared = unitsFile.replace(/min_stage\(\d*\)/g, "min_stage(99)").replace(/max_stage\(\d*\)/g, "max_stage(99)");
+
+    Object.entries(techStages).forEach(([key, value]) => {
+        if (ignoredTechs.includes(key)) {
+            return; // Skip this iteration if the tech is in the ignoredTechs list
+        }
+
+        // Use the key directly or a replacement from replacementMap if available
+        let actualKey = replacementMap.hasOwnProperty(key) ? replacementMap[key] : key;
+
+        let indexOfTech = unitsFilePrepared.indexOf(actualKey);
+        if (indexOfTech < 0) {
+            console.log("Missing tech: " + actualKey);
+            return;
+        }
+
+        let minStageIndex = unitsFilePrepared.indexOf("min_stage(", indexOfTech);
+        if (minStageIndex < 0) return; // If min_stage is not found for the tech, skip it
+        let techLevelIndex = minStageIndex + "min_stage(".length;
+        let techLevelIndexStop = unitsFilePrepared.indexOf(")", techLevelIndex);
+
+        // Since JavaScript strings are immutable, we need to build a new string with the updated value
+        unitsFilePrepared = unitsFilePrepared.substring(0, techLevelIndex) + value + unitsFilePrepared.substring(techLevelIndexStop);
+    });
+
+    return unitsFilePrepared;
+}
+
 // Placeholder for Generate button functionality
 document.getElementById('generateMod').addEventListener('click', function() {
     const techRange = techRangeSlider.noUiSlider.get();
