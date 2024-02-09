@@ -196,6 +196,17 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
     return unitsFilePrepared;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  const factionSelect = document.getElementById('factionSelect');
+  factionSelect.innerHTML = ''; // Clear existing options
+  Object.keys(factionParameters).forEach(faction => {
+    const option = document.createElement('option');
+    option.value = faction;
+    option.textContent = faction;
+    factionSelect.appendChild(option);
+  });
+});
+
 // Placeholder for Generate button functionality
 document.getElementById('generateMod').addEventListener('click', function() {
     // Get selected faction's parameters
