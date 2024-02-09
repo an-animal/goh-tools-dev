@@ -171,12 +171,12 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
     let unitsFilePrepared = unitsFile.replace(/min_stage\(\d*\)/g, "min_stage(99)").replace(/max_stage\(\d*\)/g, "max_stage(99)");
 
     Object.entries(techStages).forEach(([key, value]) => {
-        if (ignoredTechs.includes(key)) {
+        if (ignored.includes(key)) {
             return; // Skip this iteration if the tech is in the ignoredTechs list
         }
 
         // Use the key directly or a replacement from replacementMap if available
-        let actualKey = replacementMap.hasOwnProperty(key) ? replacementMap[key] : key;
+        let actualKey = replacementMap.hasOwnProperty(key) ? aliases[key] : key;
 
         let indexOfTech = unitsFilePrepared.indexOf(actualKey);
         if (indexOfTech < 0) {
