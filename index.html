@@ -251,7 +251,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         // Add your units file string to the zip
         // "unitsFile.set" is the name of the new file in the zip
         // Replace it with whatever filename you want the content to have
-        zip.file(unitsFileName, unitsFileString);
+        zip.file(unitsFileName, unitsFileOutput);
     
         // Generate the zip file and trigger a download
         zip.generateAsync({type:"blob"})
