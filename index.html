@@ -14,7 +14,14 @@
     .setting {
         margin-bottom: 20px;
     }
-    #techRangeSlider .noUi-handle {
+    .slider-container {
+        max-width: 400px; /* Adjust this value to your preference */
+        margin: auto;
+    }
+    #techRangeSlider, #criticalStagesChanceSlider {
+        width: 100%; /* Makes the slider expand to fill the container */
+    }
+    #techRangeSlider .noUi-handle, #criticalStagesChanceSlider .noUi-handle {
         outline: none;
         border: 1px solid #ddd;
         cursor: pointer;
@@ -23,7 +30,7 @@
         background-color: #FFF;
         border-radius: 50%;
     }
-    #techRangeSlider .noUi-connect {
+    #techRangeSlider .noUi-connect, #criticalStagesChanceSlider .noUi-connect {
         background: #009688;
     }
     .generate-button {
@@ -55,12 +62,12 @@
     </select>
 </div>
 
-<div class="setting">
+<div class="setting slider-container">
     <h4>Tech Unlocked Per Stage:</h4>
     <div id="techRangeSlider"></div>
 </div>
 
-<div class="setting">
+<div class="setting slider-container">
     <label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
     <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
     <span id="criticalChanceValue">0%</span>
