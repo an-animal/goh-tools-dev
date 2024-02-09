@@ -1,3 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conquest Tech Tool</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css">
+<script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
+<style>
+    #techRangeSlider .noUi-handle {
+        outline: none;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        background-color: #FFF;
+        border-radius: 50%;
+    }
+    #techRangeSlider .noUi-connect {
+        background: #009688;
+    }
+</style>
+</head>
 <body>
-  Test
+
+<h2>Game Mod Configuration</h2>
+
+<!-- Faction Selection -->
+<label for="factionSelect">Select a Faction:</label>
+<select id="factionSelect">
+    <option value="Germany">Germany</option>
+    <option value="USA">USA</option>
+    <option value="Soviet Union">Soviet Union</option>
+    <option value="Finland">Finland</option>
+</select>
+
+<!-- Tech Unlocked Per Stage Slider -->
+<h4>Tech Unlocked Per Stage:</h4>
+<div id="techRangeSlider" style="margin-top: 20px; margin-bottom: 20px;"></div>
+<span id="techRangeValue"></span>
+
+<!-- Critical Stages Checkbox -->
+<label for="criticalStagesCheckbox">Enable Critical Stages:</label>
+<input type="checkbox" id="criticalStagesCheckbox">
+
+<!-- Critical Stages Chance Slider -->
+<label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
+<input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="50">
+<span id="criticalChanceValue">50%</span>
+
+<script>
+// Initialize the Tech Unlocked Per Stage slider
+var techRangeSlider = document.getElementById('techRangeSlider');
+
+noUiSlider.create(techRangeSlider, {
+    start: [20, 80], // Starting values for the slider handles
+    connect: true, // Display a colored bar between the handles
+    range: {
+        'min': 0,
+        'max': 100
+    },
+    tooltips: true,
+    format: {
+      to: function (value) {
+        return value.toFixed(0);
+      },
+      from: function (value) {
+        return Number(value);
+      }
+    }
+});
+
+techRangeSlider.noUiSlider.on('update', function (values, handle) {
+    document.getElementById('techRangeValue').innerHTML = 'Min: ' + values[0] + ', Max: ' + values[1];
+});
+
+// Handle Critical Stages Chance slider changes
+var criticalStagesChanceSlider = document.getElementById('criticalStagesChanceSlider');
+var criticalChanceValue = document.getElementById('criticalChanceValue');
+
+criticalStagesChanceSlider.oninput = function() {
+    criticalChanceValue.innerHTML = this.value + '%';
+}
+</script>
+
 </body>
+</html>
