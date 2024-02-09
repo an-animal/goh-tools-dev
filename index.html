@@ -166,7 +166,7 @@ function generateNewResearchTree(userParams, factionParams) {
     return techStages;
 }
 
-function buildUnitsFileString(techStages, unitsFile, ignoredTechs, replacementMap) {
+function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
     // Replace all min_stage and max_stage occurrences with '99'
     let unitsFilePrepared = unitsFile.replace(/min_stage\(\d*\)/g, "min_stage(99)").replace(/max_stage\(\d*\)/g, "max_stage(99)");
 
@@ -198,27 +198,39 @@ function buildUnitsFileString(techStages, unitsFile, ignoredTechs, replacementMa
 
 // Placeholder for Generate button functionality
 document.getElementById('generateMod').addEventListener('click', function() {
-    const techRange = techRangeSlider.noUiSlider.get();
-    const minTechPerStage = parseInt(techRange[0], 10); // Start value of the tech range slider
-    const maxTechPerStage = parseInt(techRange[1], 10); // End value of the tech range slider
-    const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text(); // Here we get the raw text content of the file
+        })
+        .then(data => {
+            const techRange = techRangeSlider.noUiSlider.get();
+            const minTechPerStage = parseInt(techRange[0], 10); // Start value of the tech range slider
+            const maxTechPerStage = parseInt(techRange[1], 10); // End value of the tech range slider
+            const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
+        
+            // Construct the userParams object
+            const userParams = {
+                minimumTechPerStage: minTechPerStage,
+                maximumTechPerStage: maxTechPerStage,
+                criticalStagesCoefficient: criticalStagesCoefficient
+            };
+        
+            // Get selected faction's parameters
+            const selectedFaction = document.getElementById('factionSelect').value;
+            const factionParams = factionParameters[selectedFaction];
+        
+            // Call the function with userParams and factionParams
+            const techStages = generateNewResearchTree(userParams, factionParams);
+        
+            // Do something with techStages, e.g., display the results to the user
+            console.log(techStages);
 
-    // Construct the userParams object
-    const userParams = {
-        minimumTechPerStage: minTechPerStage,
-        maximumTechPerStage: maxTechPerStage,
-        criticalStagesCoefficient: criticalStagesCoefficient
-    };
+            const unitsFileOutput = buildUnitsFileString(techStages, data, factionParams.ignored, factionParams.aliases);
 
-    // Get selected faction's parameters
-    const selectedFaction = document.getElementById('factionSelect').value;
-    const factionParams = factionParameters[selectedFaction];
-
-    // Call the function with userParams and factionParams
-    const techStages = generateNewResearchTree(userParams, factionParams);
-
-    // Do something with techStages, e.g., display the results to the user
-    console.log(techStages);
+            console.log(unitsFileOutput);
+        });
 });
 </script>
 
