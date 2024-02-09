@@ -168,8 +168,9 @@ function generateNewResearchTree(userParams, factionParams) {
 
 // Placeholder for Generate button functionality
 document.getElementById('generateMod').addEventListener('click', function() {
-    const minTechPerStage = parseInt(document.getElementById('minTechPerStage').value, 10);
-    const maxTechPerStage = parseInt(document.getElementById('maxTechPerStage').value, 10);
+    const techRange = techRangeSlider.noUiSlider.get();
+    const minTechPerStage = parseInt(techRange[0], 10); // Start value of the tech range slider
+    const maxTechPerStage = parseInt(techRange[1], 10); // End value of the tech range slider
     const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
 
     // Construct the userParams object
