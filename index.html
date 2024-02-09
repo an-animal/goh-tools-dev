@@ -7,6 +7,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css">
 <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
 <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .setting {
+        margin: 20px 0;
+    }
     #techRangeSlider .noUi-handle {
         outline: none;
         border: 1px solid #ddd;
@@ -25,28 +32,27 @@
 
 <h2>Game Mod Configuration</h2>
 
-<!-- Faction Selection -->
-<label for="factionSelect">Select a Faction:</label>
-<select id="factionSelect">
-    <option value="Germany">Germany</option>
-    <option value="USA">USA</option>
-    <option value="Soviet Union">Soviet Union</option>
-    <option value="Finland">Finland</option>
-</select>
+<div class="setting">
+    <label for="factionSelect">Select a Faction:</label>
+    <select id="factionSelect">
+        <option value="Germany">Germany</option>
+        <option value="USA">USA</option>
+        <option value="Soviet Union">Soviet Union</option>
+        <option value="Finland">Finland</option>
+    </select>
+</div>
 
-<!-- Tech Unlocked Per Stage Slider -->
-<h4>Tech Unlocked Per Stage:</h4>
-<div id="techRangeSlider" style="margin-top: 20px; margin-bottom: 20px;"></div>
-<span id="techRangeValue"></span>
+<div class="setting">
+    <h4>Tech Unlocked Per Stage:</h4>
+    <div id="techRangeSlider"></div>
+    <span id="techRangeValue"></span>
+</div>
 
-<!-- Critical Stages Checkbox -->
-<label for="criticalStagesCheckbox">Enable Critical Stages:</label>
-<input type="checkbox" id="criticalStagesCheckbox">
-
-<!-- Critical Stages Chance Slider -->
-<label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
-<input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="50">
-<span id="criticalChanceValue">50%</span>
+<div class="setting">
+    <label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
+    <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
+    <span id="criticalChanceValue">0%</span>
+</div>
 
 <script>
 // Initialize the Tech Unlocked Per Stage slider
