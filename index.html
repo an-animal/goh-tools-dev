@@ -176,7 +176,7 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
         }
 
         // Use the key directly or a replacement from replacementMap if available
-        let actualKey = replacementMap.hasOwnProperty(key) ? aliases[key] : key;
+        let actualKey = aliases.hasOwnProperty(key) ? aliases[key] : key;
 
         let indexOfTech = unitsFilePrepared.indexOf(actualKey);
         if (indexOfTech < 0) {
