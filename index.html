@@ -6,6 +6,8 @@
 <title>Conquest Tech Tool</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.css">
 <script src="https://cdn.jsdelivr.net/npm/nouislider/distribute/nouislider.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -212,8 +214,9 @@ document.getElementById('generateMod').addEventListener('click', function() {
     // Get selected faction's parameters
     const selectedFaction = document.getElementById('factionSelect').value;
     const factionParams = factionParameters[selectedFaction];
+    const unitsFileName = 'units_' + factionParams.shorthand + '.set';
     
-    fetch('units_' + factionParams.shorthand + '.set').then(response => {
+    fetch(unitsFileName).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -241,7 +244,22 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const unitsFileOutput = buildUnitsFileString(techStages, data, factionParams.ignored, factionParams.aliases);
 
         console.log(unitsFileOutput);
-    });
+
+        // Create a new JSZip instance
+        var zip = new JSZip();
+    
+        // Add your units file string to the zip
+        // "unitsFile.set" is the name of the new file in the zip
+        // Replace it with whatever filename you want the content to have
+        zip.file(unitsFileName, unitsFileString);
+    
+        // Generate the zip file and trigger a download
+        zip.generateAsync({type:"blob"})
+            .then(function(content) {
+                // Use FileSaver to save the file
+                saveAs(content, "download.zip"); // "download.zip" is the name of the downloaded zip file
+            });
+        });
 });
 </script>
 
