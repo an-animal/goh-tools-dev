@@ -12,7 +12,7 @@
         margin: 20px;
     }
     .setting {
-        margin: 20px 0;
+        margin-bottom: 20px;
     }
     #techRangeSlider .noUi-handle {
         outline: none;
@@ -26,11 +26,24 @@
     #techRangeSlider .noUi-connect {
         background: #009688;
     }
+    .generate-button {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        margin: 10px 0;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+    .generate-button:hover {
+        background-color: #45a049;
+    }
 </style>
 </head>
 <body>
 
-<h2>Game Mod Configuration</h2>
+<h2>Conquest Tech Tool</h2>
 
 <div class="setting">
     <label for="factionSelect">Select a Faction:</label>
@@ -45,7 +58,6 @@
 <div class="setting">
     <h4>Tech Unlocked Per Stage:</h4>
     <div id="techRangeSlider"></div>
-    <span id="techRangeValue"></span>
 </div>
 
 <div class="setting">
@@ -53,6 +65,8 @@
     <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
     <span id="criticalChanceValue">0%</span>
 </div>
+
+<button class="generate-button" id="generateMod">Generate</button>
 
 <script>
 // Initialize the Tech Unlocked Per Stage slider
@@ -76,10 +90,6 @@ noUiSlider.create(techRangeSlider, {
     }
 });
 
-techRangeSlider.noUiSlider.on('update', function (values, handle) {
-    document.getElementById('techRangeValue').innerHTML = 'Min: ' + values[0] + ', Max: ' + values[1];
-});
-
 // Handle Critical Stages Chance slider changes
 var criticalStagesChanceSlider = document.getElementById('criticalStagesChanceSlider');
 var criticalChanceValue = document.getElementById('criticalChanceValue');
@@ -87,6 +97,12 @@ var criticalChanceValue = document.getElementById('criticalChanceValue');
 criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
+
+// Placeholder for Generate button functionality
+document.getElementById('generateMod').addEventListener('click', function() {
+    // Placeholder for script to generate game files
+    console.log('Generate button clicked. Implement functionality here.');
+});
 </script>
 
 </body>
