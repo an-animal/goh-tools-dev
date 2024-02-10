@@ -102,13 +102,13 @@ const factionParameters = {
 var techRangeSlider = document.getElementById('techRangeSlider');
 
 noUiSlider.create(techRangeSlider, {
-    start: [1, 20], // Adjusted starting values within the new limits
+    start: [2, 5], 
     connect: true,
     range: {
         'min': 1,
         'max': 20
     },
-    tooltips: true,
+    tooltips: false,
     format: {
       to: function (value) {
         return value.toFixed(0);
@@ -116,6 +116,17 @@ noUiSlider.create(techRangeSlider, {
       from: function (value) {
         return Number(value);
       }
+    }
+});
+
+var marginMin = document.getElementById('techRangeSlider-margin-value-min'),
+    marginMax = document.getElementById('techRangeSlider-margin-value-max');
+
+techRangeSlider.noUiSlider.on('update', function (values, handle) {
+    if (handle) {
+        marginMax.innerHTML = values[handle];
+    } else {
+        marginMin.innerHTML = values[handle];
     }
 });
 
