@@ -64,6 +64,7 @@
 <div class="setting">
     <h4>Tech Unlocked Per Stage:</h4>
     <div id="techRangeSlider"></div>
+    <p id="techRangeValues">Min/Max Research per Stage: <span id="minValue"></span> - <span id="maxValue"></span></p>
 </div>
 
 <div class="setting">
@@ -108,8 +109,6 @@ noUiSlider.create(techRangeSlider, {
         'min': 1,
         'max': 20
     },
-    tooltips: false,
-    margin: 30,
     format: {
       to: function (value) {
         return value.toFixed(0);
@@ -120,15 +119,13 @@ noUiSlider.create(techRangeSlider, {
     }
 });
 
-var marginMin = document.getElementById('techRangeSlider-value-min'),
-    marginMax = document.getElementById('techRangeSlider-value-max');
+function updateTechRangeValues(values) {
+    document.getElementById('minValue').textContent = values[0];
+    document.getElementById('maxValue').textContent = values[1];
+}
 
 techRangeSlider.noUiSlider.on('update', function (values, handle) {
-    if (handle) {
-        marginMax.innerHTML = values[handle];
-    } else {
-        marginMin.innerHTML = values[handle];
-    }
+    updateTechRangeValues(values);
 });
 
 // Handle Critical Stages Chance slider changes
