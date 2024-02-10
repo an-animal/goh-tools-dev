@@ -251,7 +251,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const modName = `Better Conquest ${Date.now()}`;
         zip.file("mod.info", `{\n\t{name "${modName}"}\n\n\t{desc "This mod slows the pace of conquest research for the enemy AI."}\n\t{minGameVersion "1.0.0"}\n\t{maxGameVersion "69.420.69"}\n}`);
 
-        const setFolder = zip.folder("resource").folder("set");
+        const modFolder = zip.folder(modName.lower().replaceAll(" ", "_"));
+        const setFolder = modFolder.folder("resource").folder("set");
         const unitFolder = setFolder.folder("multiplayer").folder("units").folder("conquest");
         unitFolder.file(unitsFileName, unitsFileOutput);
 
