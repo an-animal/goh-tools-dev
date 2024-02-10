@@ -250,7 +250,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         zip.file("mod.info", '{\n\t{name "Better Conquest"}\n\n\t{desc "This mod slows the pace of conquest research for the enemy AI."}\n\t{minGameVersion "1.0.0"}\n\t{maxGameVersion "69.420.69"}}');
     
-        const unitFolder = zip.folder("resource").("set").("multiplayer").("units").("conquest");
+        const unitFolder = zip.folder("resource").folder("set").folder("multiplayer").folder("units").folder("conquest");
         unitFolder.file(unitsFileName, unitsFileOutput);
 
         // Generate the zip file and trigger a dwnload
