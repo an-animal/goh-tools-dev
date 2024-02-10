@@ -85,6 +85,12 @@
     </ul>
     <p>Start up the game, activate your mod, and begin a new, unpredictable conquest match! (Make sure to pick the same enemy faction as you generated the mod for.)</p>
 </div>
+
+<div id="spoilerSection" style="display: none;">
+    <h3>AI Research Path (Spoilers!)</h3>
+    <p>This section contains the generated AI research path which may spoil the unpredictability of the game. View at your own discretion.</p>
+</div>
+<button id="toggleSpoiler">Show Spoilers</button>
     
 <script>   
 const factionParameters = {
@@ -218,6 +224,17 @@ document.addEventListener('DOMContentLoaded', () => {
     option.textContent = faction;
     factionSelect.appendChild(option);
   });
+});
+
+document.getElementById('toggleSpoiler').addEventListener('click', function() {
+    const spoilerSection = document.getElementById('spoilerSection');
+    if (spoilerSection.style.display === "none") {
+        spoilerSection.style.display = "block";
+        this.textContent = "Hide Spoilers";
+    } else {
+        spoilerSection.style.display = "none";
+        this.textContent = "Show Spoilers";
+    }
 });
 
 // Placeholder for Generate button functionality
