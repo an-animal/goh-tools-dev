@@ -109,6 +109,7 @@ noUiSlider.create(techRangeSlider, {
         'max': 20
     },
     tooltips: false,
+    margin: 30,
     format: {
       to: function (value) {
         return value.toFixed(0);
@@ -119,8 +120,8 @@ noUiSlider.create(techRangeSlider, {
     }
 });
 
-var marginMin = document.getElementById('techRangeSlider-margin-value-min'),
-    marginMax = document.getElementById('techRangeSlider-margin-value-max');
+var marginMin = document.getElementById('techRangeSlider-value-min'),
+    marginMax = document.getElementById('techRangeSlider-value-max');
 
 techRangeSlider.noUiSlider.on('update', function (values, handle) {
     if (handle) {
