@@ -39,6 +39,21 @@
     .generate-button:hover {
         background-color: #45a049;
     }
+
+    #techTableContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    }
+    
+    #techTableContainer th, #techTableContainer td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    
+    #techTableContainer th {
+        background-color: #f2f2f2;
+    }
 </style>
 </head>
 <body>
@@ -86,6 +101,8 @@
 <div id="spoilerSection" style="display: none;">
     <h3>AI Research Path (Spoilers!)</h3>
     <p>This section contains the generated AI research path which may spoil the unpredictability of the game. View at your own discretion.</p>
+
+    <div id="techTableContainer"></div> <!-- Spoilers table will be inserted here -->
 </div>
 
     
@@ -128,6 +145,41 @@ var criticalChanceValue = document.getElementById('criticalChanceValue');
 
 criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
+}
+
+function generateTechTable(techStages) {
+    const container = document.getElementById('techTableContainer');
+    container.innerHTML = ''; // Clear previous table if any
+
+    // Create table and headers
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    const headerRow = document.createElement('tr');
+    const headerTech = document.createElement('th');
+    headerTech.textContent = 'Tech Name';
+    const headerStage = document.createElement('th');
+    headerStage.textContent = 'Unlock Stage';
+    headerRow.appendChild(headerTech);
+    headerRow.appendChild(headerStage);
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+    table.appendChild(tbody);
+
+    // Populate table rows with techStages data
+    Object.entries(techStages).forEach(([tech, stage]) => {
+        const row = document.createElement('tr');
+        const techCell = document.createElement('td');
+        techCell.textContent = tech;
+        const stageCell = document.createElement('td');
+        stageCell.textContent = stage;
+        row.appendChild(techCell);
+        row.appendChild(stageCell);
+        tbody.appendChild(row);
+    });
+
+    // Append the table to the container
+    container.appendChild(table);
 }
 
 function findAvailableTech(techStages, techPrereqs) {
@@ -273,6 +325,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
     
         // Do something with techStages, e.g., display the results to the user
         console.log(techStages);
+
+        generateTechTable(techStages);
 
         const unitsFileOutput = buildUnitsFileString(techStages, data, factionParams.ignored, factionParams.aliases);
 
