@@ -248,7 +248,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
         // Create a new JSZip instance
         var zip = new JSZip();
 
-        zip.file("mod.info", '{\n\t{name "Better Conquest"}\n\n\t{desc "This mod slows the pace of conquest research for the enemy AI."}\n\t{minGameVersion "1.0.0"}\n\t{maxGameVersion "69.420.69"}\n}');
+        const modName = `Better Conquest ${Date.now()}`;
+        zip.file("mod.info", `{\n\t{name "${modName}"}\n\n\t{desc "This mod slows the pace of conquest research for the enemy AI."}\n\t{minGameVersion "1.0.0"}\n\t{maxGameVersion "69.420.69"}\n}`);
 
         const setFolder = zip.folder("resource").folder("set");
         const unitFolder = setFolder.folder("multiplayer").folder("units").folder("conquest");
@@ -261,7 +262,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         zip.generateAsync({type:"blob"})
             .then(function(content) {
                 // Use FileSaver to save the file
-                saveAs(content, "download.zip"); // "download.zip" is the name of the downloaded zip file
+                saveAs(content, modName"); // "download.zip" is the name of the downloaded zip file
             });
         });
 });
