@@ -67,10 +67,32 @@
         margin-right: 20px; /* Optional: adds some space between the containers */
     }
     
-    #newFeaturesContainer {
+    #scopesContainer {
         /* Adjust width as necessary */
         width: 300px; /* Example fixed width for the new features container */
         /* Flex properties can be adjusted as needed */
+    }
+
+    .tech-path {
+        margin-bottom: 20px;
+    }
+    
+    .preferences {
+        display: inline-grid;
+        grid-template-columns: repeat(5, auto);
+        gap: 10px;
+    }
+    
+    .preference-option {
+        padding: 10px;
+        background-color: #f0f0f0;
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid transparent; /* Makes room for the border */
+    }
+    
+    .preference-option.selected {
+        border-color: #007bff; /* Highlight color for selected option */
     }
 </style>
 </head>
@@ -102,8 +124,21 @@
             <span id="criticalChanceValue">0%</span>
         </div>
     </div>
-    <div id="newFeaturesContainer">
-        
+    <div id="scopesContainer">
+        <div id="techPathsPreferences">
+            <h3>AI Tech Path Preferences</h3>
+            <div class="tech-path" data-tech="Light Tanks">
+                <span>Light Tanks</span>
+                <div class="preferences">
+                    <div class="preference-option" data-preference="Restrict">Restrict</div>
+                    <div class="preference-option" data-preference="Neglect">Neglect</div>
+                    <div class="preference-option" data-preference="Neutral">Neutral</div>
+                    <div class="preference-option" data-preference="Prefer">Prefer</div>
+                    <div class="preference-option" data-preference="Focus">Focus</div>
+                </div>
+            </div>
+            <!-- Repeat for other tech paths -->
+        </div>
     </div>
 </div>
 
@@ -172,6 +207,25 @@ var criticalChanceValue = document.getElementById('criticalChanceValue');
 criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
+
+document.querySelectorAll('.tech-path').forEach(techPath => {
+    techPath.querySelectorAll('.preference-option').forEach(option => {
+        option.addEventListener('click', () => {
+            // Remove 'selected' class from siblings
+            techPath.querySelectorAll('.preference-option').forEach(sibling => {
+                sibling.classList.remove('selected');
+            });
+            // Add 'selected' class to clicked option
+            option.classList.add('selected');
+            
+            // Optionally, handle the selection logic here
+            // For example, update an object storing the user's preferences
+            const tech = techPath.getAttribute('data-tech');
+            const preference = option.getAttribute('data-preference');
+            console.log(`${tech} preference set to ${preference}`); // Example logging
+        });
+    });
+});
 
 function generateTechTable(techStages) {
     const container = document.getElementById('techTableContainer');
