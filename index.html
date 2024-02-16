@@ -85,14 +85,36 @@
     
     .preference-option {
         padding: 10px;
-        background-color: #f0f0f0;
+        background-color: #f0f0f0; /* Default background */
         text-align: center;
         cursor: pointer;
-        border: 2px solid transparent; /* Makes room for the border */
+        border: 2px solid transparent; /* Prepare for border change without shifting content */
+        transition: background-color 0.3s; /* Smooth transition for background color */
     }
     
-    .preference-option.selected {
-        border-color: #007bff; /* Highlight color for selected option */
+    /* Color coding for selected states */
+    .preference-option.selected[data-preference="Restrict"] {
+        background-color: #8b0000; /* Dark red */
+        border-color: #8b0000; /* Match border to background for emphasis */
+        color: white; /* Ensure text is readable on dark backgrounds */
+    }
+    
+    .preference-option.selected[data-preference="Neglect"] {
+        background-color: #f08080; /* Light red */
+        border-color: #f08080;
+    }
+    
+    /* Neutral stays default, no additional class needed */
+    
+    .preference-option.selected[data-preference="Prefer"] {
+        background-color: #90ee90; /* Light green */
+        border-color: #90ee90;
+    }
+    
+    .preference-option.selected[data-preference="Focus"] {
+        background-color: #006400; /* Dark green */
+        border-color: #006400;
+        color: white;
     }
 </style>
 </head>
