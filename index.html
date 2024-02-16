@@ -78,9 +78,7 @@
     }
 
     .tech-name {
-        flex-shrink: 0;
-        width: 150px; /* Adjust this value based on your content and layout needs */
-        margin-right: 10px; /* Optional: Adds some space between the name and the options */
+        width: 100px; /* Adjust this value based on your content and layout needs */
     }
     
     .preferences {
@@ -249,6 +247,8 @@ function generateTechPathPreferences(config) {
     const preferencesDiv = document.createElement('div');
     preferencesDiv.className = 'preferences';
 
+    preferencesDiv.appendChild(techNameDiv);
+
     // Array of preferences
     const preferences = ["Restrict", "Neglect", "Neutral", "Prefer", "Focus"];
 
@@ -279,7 +279,6 @@ function generateTechPathPreferences(config) {
       preferencesDiv.appendChild(optionDiv);
     });
 
-    techPathDiv.appendChild(techNameDiv);
     techPathDiv.appendChild(preferencesDiv);
     container.appendChild(techPathDiv);
   });
