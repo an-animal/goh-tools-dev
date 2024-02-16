@@ -252,6 +252,12 @@ document.querySelectorAll('.tech-path').forEach(techPath => {
             console.log(`${tech} preference set to ${preference}`); // Example logging
         });
     });
+
+    //Default to neutral
+    const neutralOption = techPath.querySelector('.preference-option[data-preference="Neutral"]');
+    if (neutralOption) {
+        neutralOption.classList.add('selected'); 
+    }
 });
 
 function generateTechTable(techStages) {
