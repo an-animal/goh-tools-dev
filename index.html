@@ -235,29 +235,69 @@ criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
 
-document.querySelectorAll('.tech-path').forEach(techPath => {
-    techPath.querySelectorAll('.preference-option').forEach(option => {
-        option.addEventListener('click', () => {
-            // Remove 'selected' class from siblings
-            techPath.querySelectorAll('.preference-option').forEach(sibling => {
-                sibling.classList.remove('selected');
-            });
-            // Add 'selected' class to clicked option
-            option.classList.add('selected');
-            
-            // Optionally, handle the selection logic here
-            // For example, update an object storing the user's preferences
-            const tech = techPath.getAttribute('data-tech');
-            const preference = option.getAttribute('data-preference');
-            console.log(`${tech} preference set to ${preference}`); // Example logging
+function generateTechPathPreferences(config) {
+  const container = document.getElementById('techPathsPreferences');
+
+  config.techPaths.forEach(path => {
+    // Create the container for each tech path
+    const techPathDiv = document.createElement('div');
+    techPathDiv.className = 'tech-path';
+    techPathDiv.setAttribute('data-tech', path);
+
+    // Tech Path Name
+    const techNameText = document.createTextNode(`${path}: `);
+    techPathDiv.appendChild(techNameText);
+
+    // Preferences Container
+    const preferencesDiv = document.createElement('div');
+    preferencesDiv.className = 'preferences';
+
+    // Array of preferences
+    const preferences = ["Restrict", "Neglect", "Neutral", "Prefer", "Focus"];
+
+    // Generate preference options
+    preferences.forEach(preference => {
+      const optionDiv = document.createElement('div');
+      optionDiv.className = 'preference-option';
+      optionDiv.setAttribute('data-preference', preference);
+      optionDiv.textContent = preference;
+
+      // Set "Neutral" as default selected
+      if (preference === "Neutral") {
+        optionDiv.classList.add('selected');
+      }
+
+      // Click event for selecting a preference
+      optionDiv.addEventListener('click', () => {
+        // Remove 'selected' class from siblings
+        preferencesDiv.querySelectorAll('.preference-option').forEach(sibling => {
+          sibling.classList.remove('selected');
         });
+        // Add 'selected' class to clicked option
+        optionDiv.classList.add('selected');
+        
+        // Optional: Update some state or perform an action based on selection
+      });
+
+      preferencesDiv.appendChild(optionDiv);
     });
 
-    //Default to neutral
-    const neutralOption = techPath.querySelector('.preference-option[data-preference="Neutral"]');
-    if (neutralOption) {
-        neutralOption.classList.add('selected'); 
-    }
+    techPathDiv.appendChild(preferencesDiv);
+    container.appendChild(techPathDiv);
+  });
+}
+
+// Call the function to generate the tech path preferences on page load
+document.addEventListener('DOMContentLoaded', () => {
+  generateTechPathPreferences({
+      "techPaths": [
+        "Light Tanks",
+        "Heavy Tanks",
+        "Infantry",
+        "Artillery",
+        "Support"
+      ]
+    });
 });
 
 function generateTechTable(techStages) {
