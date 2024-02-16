@@ -76,6 +76,12 @@
     .tech-path {
         margin-bottom: 20px;
     }
+
+    .tech-name {
+        flex-shrink: 0;
+        width: 150px; /* Adjust this value based on your content and layout needs */
+        margin-right: 10px; /* Optional: Adds some space between the name and the options */
+    }
     
     .preferences {
         display: inline-grid;
@@ -154,17 +160,7 @@
     <div id="scopesContainer">
         <div id="techPathsPreferences">
             <h3>AI Tech Path Preferences</h3>
-            <div class="tech-path" data-tech="Light Tanks">
-                Light Tanks
-                <div class="preferences">
-                    <div class="preference-option" data-preference="Restrict">Restrict</div>
-                    <div class="preference-option" data-preference="Neglect">Neglect</div>
-                    <div class="preference-option" data-preference="Neutral">Neutral</div>
-                    <div class="preference-option" data-preference="Prefer">Prefer</div>
-                    <div class="preference-option" data-preference="Focus">Focus</div>
-                </div>
-            </div>
-            <!-- Repeat for other tech paths -->
+
         </div>
     </div>
 </div>
@@ -244,9 +240,10 @@ function generateTechPathPreferences(config) {
     techPathDiv.className = 'tech-path';
     techPathDiv.setAttribute('data-tech', path);
 
-    // Tech Path Name
-    const techNameText = document.createTextNode(`${path}: `);
-    techPathDiv.appendChild(techNameText);
+    // Container for the tech path name
+    const techNameDiv = document.createElement('div');
+    techNameDiv.className = 'tech-name';
+    techNameDiv.textContent = `${path}:`;
 
     // Preferences Container
     const preferencesDiv = document.createElement('div');
