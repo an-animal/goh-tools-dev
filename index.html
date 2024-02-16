@@ -16,6 +16,9 @@
     .setting {
         margin-bottom: 20px;
     }
+    .center-text {
+        text-align: center;
+    }
     #techRangeSlider {
         max-width: 400px; /* Control the width without centering */
         margin-top: 20px; /* Add space above the slider */
@@ -243,6 +246,7 @@ function generateTechPathPreferences(config) {
 
     // Container for the tech path name
     const techNameDiv = document.createElement('div');
+    techNameDiv.classList.add('center-text');
     techNameDiv.textContent = `${path}`;
 
     // Preferences Container
