@@ -231,7 +231,10 @@ criticalStagesChanceSlider.oninput = function() {
 
 function generateTechPathPreferences(config) {
   const container = document.getElementById('techPathsPreferences');
-
+  const preferencesDiv = document.createElement('div');
+  preferencesTopDiv.className = 'preferences';
+  container.appendChild(preferencesTopDiv);
+  
   config.techPaths.forEach(path => {
     // Create the container for each tech path
     const techPathDiv = document.createElement('div');
@@ -244,8 +247,6 @@ function generateTechPathPreferences(config) {
 
     // Preferences Container
     const preferencesDiv = document.createElement('div');
-    preferencesDiv.className = 'preferences';
-
     preferencesDiv.appendChild(techNameDiv);
 
     // Array of preferences
@@ -279,7 +280,7 @@ function generateTechPathPreferences(config) {
     });
 
     techPathDiv.appendChild(preferencesDiv);
-    container.appendChild(techPathDiv);
+    preferencesTopDiv.appendChild(techPathDiv);
   });
 }
 
