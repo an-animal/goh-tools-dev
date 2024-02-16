@@ -83,7 +83,7 @@
     
     .preferences {
         display: inline-grid;
-        grid-template-columns: repeat(5, auto);
+        grid-template-columns: repeat(6, auto);
         gap: 10px;
     }
     
@@ -240,7 +240,6 @@ function generateTechPathPreferences(config) {
 
     // Container for the tech path name
     const techNameDiv = document.createElement('div');
-    techNameDiv.className = 'tech-name';
     techNameDiv.textContent = `${path}`;
 
     // Preferences Container
