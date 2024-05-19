@@ -192,7 +192,27 @@
 
     
 <script type="module">   
-const factionParameters = await (await fetch('config.json')).json();
+let factionParameters;
+
+// Call the function to generate the tech path preferences on page load
+document.addEventListener('DOMContentLoaded', () => {
+  generateTechPathPreferences({
+      "techPaths": factionParameters.doctrineTags.keys()
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const factionSelect = document.getElementById('factionSelect');
+  factionSelect.innerHTML = ''; // Clear existing options
+  Object.keys(factionParameters).forEach(faction => {
+    const option = document.createElement('option');
+    option.value = faction;
+    option.textContent = faction;
+    factionSelect.appendChild(option);
+  });
+});
+    
+factionParameters = await (await fetch('config.json')).json();
 console.log("Loaded faction parameters: " + JSON.stringify(factionParameters));
     
 // Initialize the Tech Unlocked Per Stage slider
@@ -288,13 +308,6 @@ function generateTechPathPreferences(config) {
     preferencesTopDiv.appendChild(techPathDiv);
   });
 }
-
-// Call the function to generate the tech path preferences on page load
-document.addEventListener('DOMContentLoaded', () => {
-  generateTechPathPreferences({
-      "techPaths": factionParameters.doctrineTags.keys()
-    });
-});
 
 function generateTechTable(techStages) {
     const container = document.getElementById('techTableContainer');
@@ -420,17 +433,6 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
 
     return unitsFilePrepared;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const factionSelect = document.getElementById('factionSelect');
-  factionSelect.innerHTML = ''; // Clear existing options
-  Object.keys(factionParameters).forEach(faction => {
-    const option = document.createElement('option');
-    option.value = faction;
-    option.textContent = faction;
-    factionSelect.appendChild(option);
-  });
-});
 
 document.getElementById('toggleSpoiler').addEventListener('click', function() {
     const spoilerSection = document.getElementById('spoilerSection');
