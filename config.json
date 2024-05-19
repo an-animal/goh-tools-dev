@@ -736,7 +736,7 @@
       ]
     },
     "doctrineTags": {
-      "lightArmor": [
+      "Light Armor": [
         "sdkfz10",
         "sdkfz221",
         "sdkfz234_1",
@@ -786,7 +786,7 @@
         "panzer5g",
         "stug3b"
       ],
-      "heavyArmor": [
+      "Heavy Armor": [
         "panzer4_70_v",
         "hetzer",
         "grille_m",
@@ -811,7 +811,7 @@
         "600mm_thor",
         "tiger1hunt"
       ],
-      "infantry": [
+      "Infantry": [
         "single_engineer(ger)",
         "single_sniper(ger)",
         "single_riflegrenade(ger)",
@@ -844,7 +844,7 @@
         "squad_officer_kubel_con",
         "squad_pz_pio_con"
       ],
-      "support": [
+      "Support": [
         "infantry_cart_if8",
         "inf_crate_ger",
         "ammo_trailer",
@@ -878,7 +878,7 @@
         "50mm_flak41",
         "37mm_flak37"
       ],
-      "artillery": [
+      "Artillery": [
         "20mm_flak30",
         "20mm_flak38",
         "28mm_pzb41",
