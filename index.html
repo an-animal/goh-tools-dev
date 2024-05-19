@@ -192,7 +192,7 @@
 
     
 <script type="module">   
-const factionParameters = JSON.parse(await fetch('config.json'));
+const factionParameters = (await fetch('config.json')).json();
     
 // Initialize the Tech Unlocked Per Stage slider
 var techRangeSlider = document.getElementById('techRangeSlider');
