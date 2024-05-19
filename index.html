@@ -232,6 +232,7 @@ criticalStagesChanceSlider.oninput = function() {
 }
 
 function generateTechPathPreferences(config) {
+  console.log("Generating tech path preferences...");
   const container = document.getElementById('techPathsPreferences');
   const preferencesTopDiv = document.createElement('div');
   preferencesTopDiv.className = 'preferences';
@@ -290,17 +291,7 @@ function generateTechPathPreferences(config) {
 // Call the function to generate the tech path preferences on page load
 document.addEventListener('DOMContentLoaded', () => {
   generateTechPathPreferences({
-      "techPaths": [
-        "Light Tanks",
-        "Heavy Tanks",
-        "Infantry",
-        "Artillery",
-        "Support",
-        "Test A",
-        "Test B",
-        "Test C",
-        "Test D"
-      ]
+      "techPaths": factionParameters.doctrineTags.keys();
     });
 });
 
