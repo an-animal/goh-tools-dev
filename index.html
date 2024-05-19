@@ -192,28 +192,27 @@
 
     
 <script type="module">   
-let factionParameters;
 
 // Call the function to generate the tech path preferences on page load
-document.addEventListener('DOMContentLoaded', () => {
-  generateTechPathPreferences({
-      "techPaths": factionParameters.doctrineTags.keys()
+const domLoaded = new Promise((resolve, reject) => {
+    document.addEventListener('DOMContentLoaded', () => {
+          resolve();
     });
-});
+}
+    
+const factionParameters = await (await fetch('config.json')).json();
+await domLoaded;
+console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
 
-document.addEventListener('DOMContentLoaded', () => {
-  const factionSelect = document.getElementById('factionSelect');
-  factionSelect.innerHTML = ''; // Clear existing options
-  Object.keys(factionParameters).forEach(faction => {
+generateTechPathPreferences({"techPaths": factionParameters.doctrineTags.keys()});
+const factionSelect = document.getElementById('factionSelect');
+factionSelect.innerHTML = ''; // Clear existing options
+Object.keys(factionParameters).forEach(faction => {
     const option = document.createElement('option');
     option.value = faction;
     option.textContent = faction;
     factionSelect.appendChild(option);
-  });
 });
-    
-factionParameters = await (await fetch('config.json')).json();
-console.log("Loaded faction parameters: " + JSON.stringify(factionParameters));
     
 // Initialize the Tech Unlocked Per Stage slider
 var techRangeSlider = document.getElementById('techRangeSlider');
