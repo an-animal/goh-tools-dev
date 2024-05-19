@@ -204,7 +204,7 @@ const factionParameters = await (await fetch('config.json')).json();
 await domLoaded;
 console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
 
-generateTechPathPreferences({"techPaths": factionParameters.doctrineTags.keys()});
+generateTechPathPreferences({"techPaths": Object.keys(factionParameters.doctrineTags)});
 const factionSelect = document.getElementById('factionSelect');
 factionSelect.innerHTML = ''; // Clear existing options
 Object.keys(factionParameters).forEach(faction => {
