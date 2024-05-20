@@ -194,12 +194,13 @@
 <script type="module">   
 
 // Call the function to generate the tech path preferences on page load
+let techPathValues = {};
 const domLoaded = new Promise((resolve, reject) => {
     document.addEventListener('DOMContentLoaded', () => {
           resolve();
     });
 });
-    
+
 const factionParameters = await (await fetch('config.json')).json();
 await domLoaded;
 console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
@@ -251,7 +252,6 @@ criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
 
-let techPathValues = {};
 function generateTechPathPreferences(config) {
   techPathValues = {};
   console.log("Generating tech path preferences...");
