@@ -493,6 +493,7 @@ function generateNewResearchTree(userParams, factionParams) {
             advances--;
         }
 
+        potentialTech = findAvailableTech(techStages, factionParams.techMap);
         currentStage++;
     }
 
