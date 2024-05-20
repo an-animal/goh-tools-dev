@@ -465,23 +465,23 @@ function generateNewResearchTree(userParams, factionParams) {
                 //Handle the case where we're only down to restricted tech
                 if(sortedTech["Focus"].length === 0 && sortedTech["Prefer"].length === 0 && sortedTech["Neutral"].length === 0 && sortedTech["Neglect"].length === 0 && sortedTech["Restrict"].length > 0){
                     potentialTech = sortedTech["Restrict"];
+                } else {
+                    //Otherwise construct our weighted array to pick from the remaining tech
+                    let weightedArray = [];
+                    if(sortedTech["Focus"].length > 0) {
+                        weightedArray.push({element: sortedTech["Focus"], weight: 50});
+                    }
+                    if(sortedTech["Prefer"].length > 0) {
+                        weightedArray.push({element: sortedTech["Prefer"], weight: 25});
+                    }
+                    if(sortedTech["Neutral"].length > 0) {
+                        weightedArray.push({element: sortedTech["Neutral"], weight: 10});
+                    }
+                    if(sortedTech["Neglect"].length > 0) {
+                        weightedArray.push({element: sortedTech["Neglect"], weight: 5});
+                    }
+                    potentialTech = getRandomElementByWeight(weightedArray);
                 }
-
-                //Otherwise construct our weighted array to pick from the remaining tech
-                let weightedArray = [];
-                if(sortedTech["Focus"].length > 0) {
-                    weightedArray.push({element: sortedTech["Focus"], weight: 50});
-                }
-                if(sortedTech["Prefer"].length > 0) {
-                    weightedArray.push({element: sortedTech["Prefer"], weight: 25});
-                }
-                if(sortedTech["Neutral"].length > 0) {
-                    weightedArray.push({element: sortedTech["Neutral"], weight: 10});
-                }
-                if(sortedTech["Neglect"].length > 0) {
-                    weightedArray.push({element: sortedTech["Neglect"], weight: 5});
-                }
-                potentialTech = getRandomElementByWeight(weightedArray);
             }
             
             let techIndex = Math.floor(Math.random() * potentialTech.length);
