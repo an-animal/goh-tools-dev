@@ -402,7 +402,7 @@ function sortTech(availableTech) {
     for(let tech of availableTech) {
         for(let doctrine of Object.keys(factionParameters[faction].doctrineTags)) {
             if(factionParameters[faction].doctrineTags[doctrine].includes(tech)) {
-                sortedTech[techPathValues[doctrine]].append(tech);
+                sortedTech[techPathValues[doctrine]].push(tech);
             }
         }
     }
@@ -470,16 +470,16 @@ function generateNewResearchTree(userParams, factionParams) {
                 //Otherwise construct our weighted array to pick from the remaining tech
                 let weightedArray = [];
                 if(sortedTech["Focus"].length > 0) {
-                    weightedArray.append({element: sortedTech["Focus"], weight: 50});
+                    weightedArray.push({element: sortedTech["Focus"], weight: 50});
                 }
                 if(sortedTech["Prefer"].length > 0) {
-                    weightedArray.append({element: sortedTech["Prefer"], weight: 25});
+                    weightedArray.push({element: sortedTech["Prefer"], weight: 25});
                 }
                 if(sortedTech["Neutral"].length > 0) {
-                    weightedArray.append({element: sortedTech["Neutral"], weight: 10});
+                    weightedArray.push({element: sortedTech["Neutral"], weight: 10});
                 }
                 if(sortedTech["Neglect"].length > 0) {
-                    weightedArray.append({element: sortedTech["Neglect"], weight: 5});
+                    weightedArray.push({element: sortedTech["Neglect"], weight: 5});
                 }
                 potentialTech = getRandomElementByWeight(weightedArray);
             }
