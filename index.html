@@ -251,8 +251,9 @@ criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
 
-let techPathValues;
+let techPathValues = {};
 function generateTechPathPreferences(config) {
+  techPathValues = {};
   console.log("Generating tech path preferences...");
   const container = document.getElementById('techPathsPreferences');
   const preferencesTopDiv = document.createElement('div');
