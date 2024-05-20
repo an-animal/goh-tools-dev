@@ -769,6 +769,9 @@
         "pz38t_a",
         "pz38t_f",
         "pz38h_735",
+        "pz38h_w40",
+        "pz38t_g",
+        "panzer3_flamm",
         "panzer3e",
         "panzer3f",
         "panzer3j",
@@ -787,7 +790,8 @@
         "panzer5a",
         "panzer5d",
         "panzer5g",
-        "stug3b"
+        "stug3b",
+        "panzerb2"
       ],
       "Heavy Armor": [
         "panzer4_70_v",
@@ -888,7 +892,11 @@
         "conquest_bf109",
         "conquest_fi156",
         "conquest_bf110",
-        "47mm_pakt"
+        "47mm_pakt",
+        "wirbelwind",
+        "defense_level_1",
+        "reinforcement_stage_3",
+        "ostwind"
       ],
       "Artillery": [
         "20mm_flak30",
@@ -928,7 +936,8 @@
         "hummel",
         "wespe",
         "sdkfz8_flak18",
-        "80mm_sgrw34_mortar_barrage"
+        "80mm_sgrw34_mortar_barrage",
+        "bison"
       ]
     }
   }
