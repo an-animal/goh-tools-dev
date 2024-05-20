@@ -480,6 +480,11 @@ function generateNewResearchTree(userParams, factionParams) {
                     if(sortedTech["Neglect"].length > 0) {
                         weightedArray.push({element: sortedTech["Neglect"], weight: 5});
                     }
+                    if(weightedArray.length === 0) {
+                        console.error("Missing tech in doctrines: " + JSON.stringify(findAvailableTech(techStages, factionParams.techMap)));
+                        throw new Error("Missing tech.");
+                    }
+                    
                     potentialTech = getRandomElementByWeight(weightedArray);
                 }
             }
