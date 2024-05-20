@@ -390,7 +390,7 @@ function getRandomElementByWeight(arr) {
 }
     
 function sortTech(availableTech) {
-    let tech = {
+    let sortedTech = {
         Restrict: [],
         Neglect: [],
         Neutral: [],
@@ -402,12 +402,12 @@ function sortTech(availableTech) {
     for(let tech of availableTech) {
         for(let doctrine of Object.keys(factionParameters[faction].doctrineTags)) {
             if(factionParameters[faction].doctrineTags[doctrine].includes(tech)) {
-                tech[techPathValues[doctrine]].append(tech);
+                sortedTech[techPathValues[doctrine]].append(tech);
             }
         }
     }
 
-    return tech;
+    return sortedTech;
 }
 
 function findAvailableTech(techStages, techPrereqs) {
