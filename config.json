@@ -791,7 +791,9 @@
         "panzer5d",
         "panzer5g",
         "stug3b",
-        "panzerb2"
+        "panzerb2",
+        "marder2",
+        "marder3m"
       ],
       "Heavy Armor": [
         "panzer4_70_v",
@@ -817,7 +819,8 @@
         "panzer5g",
         "600mm_thor",
         "tiger1hunt",
-        "marder2"
+        "marder2",
+        "marder3m"
       ],
       "Infantry": [
         "single_engineer(ger)",
@@ -896,7 +899,9 @@
         "wirbelwind",
         "defense_level_1",
         "reinforcement_stage_3",
-        "ostwind"
+        "ostwind",
+        "defense_level_2",
+        "reinforcement_stage_4"        
       ],
       "Artillery": [
         "20mm_flak30",
