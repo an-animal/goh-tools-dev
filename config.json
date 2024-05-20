@@ -757,12 +757,15 @@
         "sdkfz6_2",
         "sdkfz251d_16",
         "sdkfz251d_17",
+        "panzerjager1",
         "panzer1b",
         "panzer1f",
         "panzer2c",
         "panzer2f",
         "panzer2l",
         "panzer35s",
+        "p204_f",
+        "pz35t",
         "pz38t_a",
         "pz38t_f",
         "pz38h_735",
@@ -809,7 +812,8 @@
         "panzer5d",
         "panzer5g",
         "600mm_thor",
-        "tiger1hunt"
+        "tiger1hunt",
+        "marder2"
       ],
       "Infantry": [
         "single_engineer(ger)",
@@ -842,10 +846,12 @@
         "squad_brandenburger_con(ger)",
         "squad_strafbatallion_con(ger)",
         "squad_officer_kubel_con",
-        "squad_pz_pio_con"
+        "squad_pz_pio_con",
+        "squad_recon_armor_con"
       ],
       "Support": [
         "infantry_cart_if8",
+        "reinforcement_stage_2",
         "inf_crate_ger",
         "ammo_trailer",
         "panzernest_krab_ger",
@@ -857,7 +863,9 @@
         "sdkfz251d_17",
         "sdkfz251d_1_stuka",
         "sdkfz6_2",
+        "sdkfz7_2",
         "sdkfz10_4",
+        "sdkfz231",
         "sdkfz234_4",
         "sdkfz234_2",
         "sdkfz234_3",
@@ -876,7 +884,11 @@
         "mg34_lafette",
         "mg42_lafette",
         "50mm_flak41",
-        "37mm_flak37"
+        "37mm_flak37",
+        "conquest_bf109",
+        "conquest_fi156",
+        "conquest_bf110",
+        "47mm_pakt"
       ],
       "Artillery": [
         "20mm_flak30",
@@ -909,10 +921,14 @@
         "210mm_morser18",
         "210mm_nebelwerfer42",
         "300mm_nebelwerfer42",
+        "panzerwerfer42",
         "600mm_thor",
         "sig33b",
         "sturmtiger",
-        "sdkfz8_flak18"
+        "hummel",
+        "wespe",
+        "sdkfz8_flak18",
+        "80mm_sgrw34_mortar_barrage"
       ]
     }
   }
