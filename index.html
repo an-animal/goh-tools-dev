@@ -251,6 +251,7 @@ criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
 
+let techPathValues;
 function generateTechPathPreferences(config) {
   console.log("Generating tech path preferences...");
   const container = document.getElementById('techPathsPreferences');
@@ -276,6 +277,7 @@ function generateTechPathPreferences(config) {
     // Array of preferences
     const preferences = ["Restrict", "Neglect", "Neutral", "Prefer", "Focus"];
 
+    techPathValues[path] = "Neutral";
     // Generate preference options
     preferences.forEach(preference => {
       const optionDiv = document.createElement('div');
@@ -298,6 +300,9 @@ function generateTechPathPreferences(config) {
         optionDiv.classList.add('selected');
         
         // Optional: Update some state or perform an action based on selection
+        techPathValues[path] = preference;
+
+        console.log(JSON.stringify(techPathValues));
       });
 
       preferencesDiv.appendChild(optionDiv);
@@ -341,6 +346,34 @@ function generateTechTable(techStages) {
 
     // Append the table to the container
     container.appendChild(table);
+}
+
+function getRandomElementWithBias(arr, bias = 6) {
+    // Validate the array input
+    if (!Array.isArray(arr)) {
+        throw new Error('The first argument must be an array');
+    }
+    if (arr.length === 0) {
+        return undefined; // or throw new Error('The array must be non-empty');
+    }
+
+    // Validate the bias input
+    if (typeof bias !== 'number' || bias <= 0) {
+        throw new Error('The bias must be a positive number');
+    }
+
+    // Function to calculate weighted index
+    const weightedIndex = () => {
+        const random = Math.random();
+        return Math.floor(arr.length * Math.pow(random, bias));
+    };
+
+    // Return the element at the calculated index
+    return arr[weightedIndex()];
+}
+
+function pickTech(availableTech) {
+    
 }
 
 function findAvailableTech(techStages, techPrereqs) {
