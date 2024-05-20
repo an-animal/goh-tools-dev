@@ -854,7 +854,8 @@
         "squad_strafbatallion_con(ger)",
         "squad_officer_kubel_con",
         "squad_pz_pio_con",
-        "squad_recon_armor_con"
+        "squad_recon_armor_con",
+        "squad_at_late_con(ger)"
       ],
       "Support": [
         "infantry_cart_if8",
@@ -901,7 +902,9 @@
         "reinforcement_stage_3",
         "ostwind",
         "defense_level_2",
-        "reinforcement_stage_4"        
+        "reinforcement_stage_4",
+        "defense_level_3",
+        "reinforcement_stage_5"
       ],
       "Artillery": [
         "20mm_flak30",
