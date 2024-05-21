@@ -16,6 +16,9 @@
     .setting {
         margin-bottom: 20px;
     }
+    .center-text {
+        text-align: center;
+    }
     #techRangeSlider {
         max-width: 400px; /* Control the width without centering */
         margin-top: 20px; /* Add space above the slider */
@@ -54,6 +57,77 @@
     #techTableContainer th {
         background-color: #f2f2f2;
     }
+
+    #mainContainer {
+        display: flex; /* This enables Flexbox layout */
+        justify-content: space-between; /* This spaces out the child divs */
+        align-items: start; /* This aligns items at the start of the container */
+    }
+    
+    #slidersContainer {
+        /* Flex properties can be adjusted as needed, e.g., flex-grow */
+        flex-grow: 1; /* This allows the container to grow to fit available space */
+        margin-right: 20px; /* Optional: adds some space between the containers */
+    }
+    
+    #scopesContainer {
+        /* Adjust width as necessary */
+        margin-right: 20px;
+        /* Flex properties can be adjusted as needed */
+    }
+
+    .tech-path {
+        margin-bottom: 20px;
+    }
+
+    .tech-name {
+        width: 100px; /* Adjust this value based on your content and layout needs */
+    }
+    
+    .preferences {
+        display: inline-grid;
+        grid-template-columns: repeat(10, auto);
+        gap: 5px;
+    }
+    
+    .preference-option {
+        padding: 10px;
+        background-color: #f0f0f0; /* Default background */
+        text-align: center;
+        cursor: pointer;
+        border: 2px solid transparent; /* Prepare for border change without shifting content */
+        transition: background-color 0.3s; /* Smooth transition for background color */
+    }
+    
+    /* Color coding for selected states */
+    .preference-option.selected[data-preference="Restrict"] {
+        background-color: #8b0000; /* Dark red */
+        border-color: #8b0000; /* Match border to background for emphasis */
+        color: white; /* Ensure text is readable on dark backgrounds */
+    }
+    
+    .preference-option.selected[data-preference="Neglect"] {
+        background-color: #f08080; /* Light red */
+        border-color: #f08080;
+    }
+    
+    /* Neutral stays default, no additional class needed */
+    
+    .preference-option.selected[data-preference="Prefer"] {
+        background-color: #90ee90; /* Light green */
+        border-color: #90ee90;
+    }
+    
+    .preference-option.selected[data-preference="Focus"] {
+        background-color: #006400; /* Dark green */
+        border-color: #006400;
+        color: white;
+    }
+
+    .preference-option.selected[data-preference="Neutral"] {
+        background-color: #add8e6; /* Light blue */
+        border-color: #add8e6;
+    }
 </style>
 </head>
 <body>
@@ -70,16 +144,26 @@
     </select>
 </div>
 
-<div class="setting">
-    <h4>Tech Unlocked Per Stage:</h4>
-    <div id="techRangeSlider"></div>
-    <p id="techRangeValues">Min/Max Research per Stage: <span id="minValue"></span> - <span id="maxValue"></span></p>
-</div>
+<div id="mainContainer">
+    <div id="slidersContainer">
+        <div class="setting">
+            <h4>Tech Unlocked Per Stage:</h4>
+            <div id="techRangeSlider"></div>
+            <p id="techRangeValues">Min/Max Research per Stage: <span id="minValue"></span> - <span id="maxValue"></span></p>
+        </div>
+        
+        <div class="setting">
+            <label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
+            <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
+            <span id="criticalChanceValue">0%</span>
+        </div>
+    </div>
+    <div id="scopesContainer">
+        <div id="techPathsPreferences">
+            <h3>AI Tech Path Preferences</h3>
 
-<div class="setting">
-    <label for="criticalStagesChanceSlider">Critical Stages Chance:</label>
-    <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
-    <span id="criticalChanceValue">0%</span>
+        </div>
+    </div>
 </div>
 
 <button class="generate-button" id="generateMod">Generate</button>
@@ -107,10 +191,30 @@
 </div>
 
     
-<script>   
-const factionParameters = {
-    "Germany": {"faction":"Germany","shorthand":"ger","aliases":{"squad_regular_armor_con":"squad_regular_armor_con","grille_k":"grille_k","panzer35s":"panzer35s","grille_m":"grille_m","120mm_sgrw42":"120mm_sgrw42","single_riflegrenade(ger)":"squad_with2types_conquest","sdkfz10":"sdkfz10","tiger1e":"tiger1e","squad_osttruppen_con(ger)":"squad_with3types_conquest","squad_officer_250_3_con":"squad_officer_250_3_con","tiger1h":"tiger1h","hetzer":"hetzer","wirbelwind":"wirbelwind","150mm_nebelwerfer41":"150mm_nebelwerfer41","infantry_cart_if8":"infantry_cart_if8","squad_pionier_con(ger)":"squad_with9types_conquest","jagdpanzer4_l48_early":"jagdpanzer4_l48_early","75mm_lg40":"75mm_lg40","panzerwerfer42":"panzerwerfer42","80mm_sgrw34":"80mm_sgrw34","88mm_pak4341":"88mm_pak4341","panzerb2":"panzerb2","sdkfz221":"sdkfz221","squad_gd_motor_con":"squad_gd_motor_con","600mm_thor":"600mm_thor","tiger2p":"tiger2p","tiger2h":"tiger2h","170mm_k18":"170mm_k18","panzerjager1":"panzerjager1","squad_recon_con(ger)":"squad_with5types_conquest","kubelwagen_dak":"kubelwagen_dak","37mm_pak36":"37mm_pak36","squad_fallschirmjaeger_motor_con":"squad_fallschirmjaeger_motor_con","120mm_sgrw42_mortar_barrage":"120mm_sgrw42_mortar_barrage","200mm_ldgw40":"200mm_ldgw40","mg42_lafette":"mg42_lafette","105mm_lefh18":"105mm_lefh18","ferdinand":"ferdinand","conquest_bf109":"conquest_bf109","sdkfz6_ammo":"sdkfz6_ammo","sdkfz231":"sdkfz231","panzer4d":"panzer4d","conquest_fi156":"conquest_fi156","panzer4h":"panzer4h","panzer4g":"panzer4g","150mm_sig33":"150mm_sig33","sdkfz251d_21":"sdkfz251d_21","sdkfz251d_22":"sdkfz251d_22","28mm_pzb41":"28mm_pzb41","stug3f":"stug3f","stug3g":"stug3g","sdkfz251d_16":"sdkfz251d_16","sdkfz251d_17":"sdkfz251d_17","stug3b":"stug3b","ammo_trailer":"ammo_trailer","75mm_pak40":"75mm_pak40","panzer3l":"panzer3l","p204_f":"p204_f","nashorn":"nashorn","panzer3j":"panzer3j","panzer3n":"panzer3n","sdkfz7_2":"sdkfz7_2","panzer3m":"panzer3m","pz38h_735":"pz38h_735","panzer5d":"panzer5d","panzer5g":"panzer5g","sdkfz10_4":"sdkfz10_4","jagdtiger":"jagdtiger","105mm_lefh18_artillery_barrage":"105mm_lefh18_artillery_barrage","300mm_nebelwerfer42":"300mm_nebelwerfer42","squad_pz_pio_con":"squad_pz_pio_con","pz35t":"pz35t","panzer5a":"panzer5a","conquest_blank":"conquest_blank","panzer3j1":"panzer3j1","blitz3_6_fuel":"blitz3_6_fuel","conquest_bf110":"conquest_bf110","panzer4j":"panzer4j","squad_officer_con(ger)":"squad_with3types_conquest","single_at_pzs_late_con(ger)":"squad_with2types_conquest","bison":"bison","panzer2c":"panzer2c","squad_luftwaffe_con(ger)":"squad_with5types_conquest","panzer2f":"panzer2f","squad_blau_con(ger)":"squad_with5types_conquest","blitz3_6_flak30":"blitz3_6_flak30","single_sniper(ger)":"squad_with1types_conquest","50mm_flak41":"50mm_flak41","single_officer(ger)":"squad_with1types_conquest","80mm_sgrw34_mortar_barrage":"80mm_sgrw34_mortar_barrage","blitz3_6_art_ammo":"blitz3_6_art_ammo","panzernest_krab_ger":"panzernest_krab_ger","37mm_flak37":"37mm_flak37","marder3m":"marder3m","single_engineer(ger)":"squad_with2types_conquest","sdkfz6_2":"sdkfz6_2","squad_regular_con(ger)":"squad_with6types_conquest","sdkfz8_flak18":"sdkfz8_flak18","sdkfz10_pak38":"sdkfz10_pak38","marder2":"marder2","sdkfz251c_2":"sdkfz251c_2","sdkfz250a_11":"sdkfz250a_11","mg34_lafette":"mg34_lafette","sdkfz234_4":"sdkfz234_4","squad_brandenburger_con(ger)":"squad_with5types_conquest","sdkfz234_2":"sdkfz234_2","sdkfz234_3":"sdkfz234_3","panzer3h":"panzer3h","sig33b":"sig33b","squad_regular_motor_con":"squad_regular_motor_con","panzer3f":"panzer3f","wespe":"wespe","squad_sicherung_con(ger)":"squad_with3types_conquest","panzer3e":"panzer3e","sdkfz251c":"sdkfz251c","single_ap_miner(ger)":"squad_with1types_conquest","sdkfz234_1":"sdkfz234_1","stug3g_late":"stug3g_late","88mm_flak18":"88mm_flak18","ostwind":"ostwind","sturmtiger":"sturmtiger","squad_at_late_con(ger)":"squad_with3types_conquest","panzer4f2":"panzer4f2","panzer4f1":"panzer4f1","sdkfz250a_9":"sdkfz250a_9","210mm_morser18":"210mm_morser18","panzer2l":"panzer2l","sdkfz250a_1":"sdkfz250a_1","150mm_sfh18_artillery_barrage":"150mm_sfh18_artillery_barrage","single_flamer(ger)":"squad_with1types_conquest","20mm_flak38":"20mm_flak38","105mm_lefh18_smoke_barrage":"105mm_lefh18_smoke_barrage","squad_officer_kubel_con":"squad_officer_kubel_con","squad_recon_motor_con":"squad_recon_motor_con","75mm_leig18":"75mm_leig18","squad_gebirgsjaeger_con(ger)":"squad_with5types_conquest","sdkfz251d_1_stuka":"sdkfz251d_1_stuka","blitz3_6_engineering":"blitz3_6_engineering","47mm_pakt":"47mm_pakt","hummel":"hummel","210mm_nebelwerfer42":"210mm_nebelwerfer42","squad_regular_vet_con(ger)":"squad_with6types_conquest","kettenkrad_eng":"kettenkrad_eng","single_at_miner(ger)":"squad_with1types_conquest","155mm_gpf_ger":"155mm_gpf_ger","pz38t_a":"pz38t_a","squad_fallschirmjaeger_con(ger)":"squad_with9types_conquest","tiger1hunt":"tiger1hunt","100mm_nbw35":"100mm_nbw35","panzer4_70_v":"panzer4_70_v","squad_pz_pio_303b_con(ger)":"squad_with2types_0vehicle","sdkfz251d_1":"sdkfz251d_1","pz38h_w40":"pz38h_w40","pz38t_g":"pz38t_g","150mm_sfh18":"150mm_sfh18","pz38t_f":"pz38t_f","50mm_pak38":"50mm_pak38","20mm_flak30":"20mm_flak30","squad_recon_armor_con":"squad_recon_armor_con","panzer1b":"panzer1b","inf_crate_ger":"inf_crate_ger","squad_pz_pio_302_con(ger)":"squad_with2types_0vehicle","jagdpanther":"jagdpanther","sturmpanzer4":"sturmpanzer4","stuh42":"stuh42","panzer1f":"panzer1f","squad_jaeger_con(ger)":"squad_with6types_conquest","single_at(ger)":"squad_with2types_conquest","75mm_pak9738":"75mm_pak9738","jagdpanzer4_l48":"jagdpanzer4_l48","88mm_flak36":"88mm_flak36","105mm_sk18":"105mm_sk18","panzer3_flamm":"panzer3_flamm","kfz13":"kfz13","sdkfz222a":"sdkfz222a","squad_strafbatallion_con(ger)":"squad_with3types_conquest","blitz3_6":"blitz3_6"},"ignored":["defense_level_3","defense_level_2","defense_level_1","reinforcement_stage_5","reinforcement_stage_3","reinforcement_stage_4","reinforcement_stage_2"],"startingTech":["single_officer(ger)"],"techMap":{"squad_regular_armor_con":["squad_regular_motor_con"],"grille_k":["marder3m"],"panzer35s":["pz38h_735"],"120mm_sgrw42":["100mm_nbw35"],"grille_m":["marder3m"],"single_riflegrenade(ger)":["single_at(ger)"],"sdkfz10":[],"tiger1e":["tiger1h"],"squad_osttruppen_con(ger)":["squad_sicherung_con(ger)"],"squad_officer_250_3_con":["squad_officer_kubel_con"],"tiger1h":["panzer4h"],"hetzer":["marder3m","stug3g"],"wirbelwind":["panzer4g"],"150mm_nebelwerfer41":["150mm_sfh18"],"infantry_cart_if8":["inf_crate_ger"],"squad_pionier_con(ger)":["squad_sicherung_con(ger)"],"jagdpanzer4_l48_early":["panzer4h"],"75mm_lg40":["squad_fallschirmjaeger_con(ger)"],"panzerwerfer42":["150mm_nebelwerfer41"],"80mm_sgrw34":[],"88mm_pak4341":["75mm_pak40"],"sdkfz221":["kfz13"],"panzerb2":["panzer35s"],"squad_gd_motor_con":["squad_regular_vet_con(ger)","squad_regular_motor_con"],"600mm_thor":["210mm_morser18"],"tiger2p":["tiger1e"],"squad_recon_con(ger)":["squad_sicherung_con(ger)"],"170mm_k18":["210mm_morser18"],"panzerjager1":["panzer1b"],"tiger2h":["tiger2p"],"kubelwagen_dak":["squad_recon_con(ger)"],"37mm_pak36":[],"120mm_sgrw42_mortar_barrage":["squad_officer_250_3_con"],"squad_fallschirmjaeger_motor_con":["squad_fallschirmjaeger_con(ger)"],"200mm_ldgw40":["blitz3_6_engineering"],"mg42_lafette":["mg34_lafette"],"105mm_lefh18":["75mm_leig18"],"conquest_bf109":["squad_officer_con(ger)"],"sdkfz6_ammo":["blitz3_6_art_ammo"],"sdkfz231":["sdkfz221"],"ferdinand":["tiger1h"],"conquest_fi156":["single_officer(ger)"],"panzer4d":["panzer3f"],"defense_level_3":["reinforcement_stage_4","defense_level_2"],"defense_level_2":["reinforcement_stage_3","defense_level_1"],"panzer4h":["panzer4g"],"150mm_sig33":["75mm_leig18"],"panzer4g":["panzer4f2"],"sdkfz251d_21":["sdkfz251d_17"],"sdkfz251d_22":["sdkfz251d_21"],"28mm_pzb41":["single_at(ger)"],"defense_level_1":["reinforcement_stage_2"],"stug3f":["stug3b"],"stug3g":["stug3f"],"sdkfz251d_16":["sdkfz251d_1"],"sdkfz251d_17":["sdkfz251d_16"],"stug3b":["panzer3f"],"ammo_trailer":["infantry_cart_if8"],"75mm_pak40":["75mm_pak9738"],"p204_f":["sdkfz222a"],"panzer3l":["panzer3j1"],"panzer3j":["panzer3h"],"nashorn":["88mm_pak4341"],"sdkfz7_2":["sdkfz6_2"],"panzer3n":["panzer3m"],"panzer3m":["panzer3l"],"pz38h_735":["p204_f"],"panzer5d":["panzer4h"],"panzer5g":["panzer5a"],"sdkfz10_4":["sdkfz10","20mm_flak30"],"jagdtiger":["tiger2h"],"105mm_lefh18_artillery_barrage":["squad_officer_kubel_con"],"squad_pz_pio_con":["squad_pionier_con(ger)","squad_regular_motor_con"],"300mm_nebelwerfer42":["210mm_nebelwerfer42"],"pz35t":["panzer2c"],"panzer5a":["panzer5d"],"conquest_blank":[],"panzer3j1":["panzer3j"],"blitz3_6_fuel":["blitz3_6_art_ammo"],"conquest_bf110":["squad_officer_kubel_con"],"squad_officer_con(ger)":["single_officer(ger)"],"panzer4j":["panzer4h"],"single_at_pzs_late_con(ger)":["28mm_pzb41","reinforcement_stage_4"],"bison":["panzerjager1"],"panzer2c":["panzer1b"],"squad_luftwaffe_con(ger)":["squad_strafbatallion_con(ger)"],"squad_blau_con(ger)":["squad_regular_con(ger)"],"panzer2f":["panzer2c"],"blitz3_6_flak30":["20mm_flak30"],"single_sniper(ger)":["squad_recon_con(ger)"],"50mm_flak41":["37mm_flak37"],"80mm_sgrw34_mortar_barrage":["squad_officer_con(ger)"],"blitz3_6_art_ammo":["ammo_trailer"],"panzernest_krab_ger":["blitz3_6_engineering"],"37mm_flak37":["20mm_flak30"],"single_engineer(ger)":[],"marder3m":["pz38t_g"],"squad_regular_con(ger)":["squad_sicherung_con(ger)"],"sdkfz6_2":["37mm_flak37","sdkfz10_4"],"sdkfz8_flak18":["88mm_flak18","sdkfz6_2"],"sdkfz10_pak38":["sdkfz10","50mm_pak38"],"sdkfz251c_2":["sdkfz251c"],"marder2":["panzer2f"],"mg34_lafette":[],"sdkfz250a_11":["28mm_pzb41"],"reinforcement_stage_5":["reinforcement_stage_4","squad_officer_250_3_con"],"sdkfz234_4":["sdkfz234_3"],"squad_brandenburger_con(ger)":["squad_regular_vet_con(ger)"],"reinforcement_stage_3":["reinforcement_stage_2","squad_officer_con(ger)"],"sdkfz234_2":["sdkfz231"],"reinforcement_stage_4":["reinforcement_stage_3","squad_officer_kubel_con"],"sdkfz234_3":["sdkfz234_2"],"panzer3h":["panzer3f"],"reinforcement_stage_2":["single_officer(ger)"],"squad_regular_motor_con":["blitz3_6"],"sig33b":["stug3b"],"squad_sicherung_con(ger)":[],"wespe":["105mm_lefh18"],"panzer3f":["panzer3e"],"panzer3e":["pz38t_a"],"sdkfz251c":["kfz13"],"single_ap_miner(ger)":["single_engineer(ger)"],"sdkfz234_1":["sdkfz234_2"],"88mm_flak18":["50mm_flak41"],"stug3g_late":["stug3g"],"ostwind":["panzer4g"],"squad_at_late_con(ger)":["single_at_pzs_late_con(ger)"],"sturmtiger":["tiger1e"],"panzer4f2":["panzer4f1"],"panzer4f1":["panzer4d"],"sdkfz250a_9":["sdkfz250a_1"],"210mm_morser18":["150mm_sfh18"],"sdkfz250a_1":["kfz13"],"panzer2l":["panzer2f"],"150mm_sfh18_artillery_barrage":["squad_officer_250_3_con"],"single_flamer(ger)":["single_engineer(ger)"],"20mm_flak38":["20mm_flak30"],"105mm_lefh18_smoke_barrage":["single_officer(ger)"],"squad_officer_kubel_con":["squad_officer_con(ger)"],"squad_recon_motor_con":["kubelwagen_dak"],"squad_gebirgsjaeger_con(ger)":["squad_jaeger_con(ger)"],"75mm_leig18":["37mm_pak36"],"blitz3_6_engineering":["kettenkrad_eng"],"sdkfz251d_1_stuka":["210mm_nebelwerfer42"],"47mm_pakt":["37mm_pak36"],"hummel":["150mm_sfh18"],"210mm_nebelwerfer42":["150mm_nebelwerfer41"],"squad_regular_vet_con(ger)":["squad_regular_con(ger)"],"single_at_miner(ger)":["single_ap_miner(ger)"],"kettenkrad_eng":["single_engineer(ger)"],"155mm_gpf_ger":["150mm_sfh18"],"squad_fallschirmjaeger_con(ger)":["squad_gebirgsjaeger_con(ger)"],"pz38t_a":["pz35t"],"tiger1hunt":["tiger1e"],"100mm_nbw35":["80mm_sgrw34"],"squad_pz_pio_303b_con(ger)":["squad_pz_pio_302_con(ger)"],"panzer4_70_v":["jagdpanzer4_l48"],"sdkfz251d_1":["sdkfz251c"],"150mm_sfh18":["105mm_sk18"],"pz38h_w40":["pz38h_735","300mm_nebelwerfer42"],"pz38t_g":["pz38t_f"],"20mm_flak30":[],"50mm_pak38":["47mm_pakt"],"pz38t_f":["pz38t_a"],"squad_recon_armor_con":["squad_recon_motor_con"],"inf_crate_ger":[],"panzer1b":[],"squad_pz_pio_302_con(ger)":["squad_pz_pio_con"],"jagdpanther":["panzer5g"],"squad_jaeger_con(ger)":["squad_regular_con(ger)"],"panzer1f":["panzer1b"],"stuh42":["stug3g"],"sturmpanzer4":["panzer4h"],"single_at(ger)":[],"75mm_pak9738":["50mm_pak38"],"jagdpanzer4_l48":["jagdpanzer4_l48_early"],"88mm_flak36":["88mm_flak18"],"105mm_sk18":["105mm_lefh18"],"panzer3_flamm":["panzer3m"],"kfz13":[],"sdkfz222a":["sdkfz221"],"squad_strafbatallion_con(ger)":["squad_osttruppen_con(ger)"],"blitz3_6":["squad_regular_con(ger)"]}}
-}
+<script type="module">   
+
+// Call the function to generate the tech path preferences on page load
+let techPathValues = {};
+const domLoaded = new Promise((resolve, reject) => {
+    document.addEventListener('DOMContentLoaded', () => {
+          resolve();
+    });
+});
+
+const factionParameters = await (await fetch('config.json')).json();
+await domLoaded;
+console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
+
+generateTechPathPreferences({"techPaths": Object.keys(factionParameters[document.getElementById('factionSelect').value].doctrineTags)});
+const factionSelect = document.getElementById('factionSelect');
+factionSelect.innerHTML = ''; // Clear existing options
+Object.keys(factionParameters).forEach(faction => {
+    const option = document.createElement('option');
+    option.value = faction;
+    option.textContent = faction;
+    factionSelect.appendChild(option);
+});
+    
 // Initialize the Tech Unlocked Per Stage slider
 var techRangeSlider = document.getElementById('techRangeSlider');
 
@@ -148,6 +252,68 @@ criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
 }
 
+function generateTechPathPreferences(config) {
+  techPathValues = {};
+  console.log("Generating tech path preferences...");
+  const container = document.getElementById('techPathsPreferences');
+  const preferencesTopDiv = document.createElement('div');
+  preferencesTopDiv.className = 'preferences';
+  container.appendChild(preferencesTopDiv);
+  
+  config.techPaths.forEach(path => {
+    // Create the container for each tech path
+    const techPathDiv = document.createElement('div');
+    techPathDiv.className = 'tech-path';
+    techPathDiv.setAttribute('data-tech', path);
+
+    // Container for the tech path name
+    const techNameDiv = document.createElement('div');
+    techNameDiv.classList.add('center-text');
+    techNameDiv.textContent = `${path}`;
+
+    // Preferences Container
+    const preferencesDiv = document.createElement('div');
+    preferencesDiv.appendChild(techNameDiv);
+
+    // Array of preferences
+    const preferences = ["Restrict", "Neglect", "Neutral", "Prefer", "Focus"];
+
+    techPathValues[path] = "Neutral";
+    // Generate preference options
+    preferences.forEach(preference => {
+      const optionDiv = document.createElement('div');
+      optionDiv.className = 'preference-option';
+      optionDiv.setAttribute('data-preference', preference);
+      optionDiv.textContent = preference;
+
+      // Set "Neutral" as default selected
+      if (preference === "Neutral") {
+        optionDiv.classList.add('selected');
+      }
+
+      // Click event for selecting a preference
+      optionDiv.addEventListener('click', () => {
+        // Remove 'selected' class from siblings
+        preferencesDiv.querySelectorAll('.preference-option').forEach(sibling => {
+          sibling.classList.remove('selected');
+        });
+        // Add 'selected' class to clicked option
+        optionDiv.classList.add('selected');
+        
+        // Optional: Update some state or perform an action based on selection
+        techPathValues[path] = preference;
+
+        console.log(JSON.stringify(techPathValues));
+      });
+
+      preferencesDiv.appendChild(optionDiv);
+    });
+
+    techPathDiv.appendChild(preferencesDiv);
+    preferencesTopDiv.appendChild(techPathDiv);
+  });
+}
+
 function generateTechTable(techStages) {
     const container = document.getElementById('techTableContainer');
     container.innerHTML = ''; // Clear previous table if any
@@ -181,6 +347,67 @@ function generateTechTable(techStages) {
 
     // Append the table to the container
     container.appendChild(table);
+}
+
+function getRandomElementWithBias(arr, bias = 6) {
+    // Validate the array input
+    if (!Array.isArray(arr)) {
+        throw new Error('The first argument must be an array');
+    }
+    if (arr.length === 0) {
+        return undefined; // or throw new Error('The array must be non-empty');
+    }
+
+    // Validate the bias input
+    if (typeof bias !== 'number' || bias <= 0) {
+        throw new Error('The bias must be a positive number');
+    }
+
+    // Function to calculate weighted index
+    const weightedIndex = () => {
+        const random = Math.random();
+        return Math.floor(arr.length * Math.pow(random, bias));
+    };
+
+    // Return the element at the calculated index
+    return arr[weightedIndex()];
+}
+
+function getRandomElementByWeight(arr) {
+    if (!Array.isArray(arr) || arr.length === 0) {
+        throw new Error('The first argument must be a non-empty array');
+    }
+
+    const totalWeight = arr.reduce((sum, item) => sum + item.weight, 0);
+    let randomWeight = Math.random() * totalWeight;
+
+    for (const item of arr) {
+        if (randomWeight < item.weight) {
+            return item.element;
+        }
+        randomWeight -= item.weight;
+    }
+}
+    
+function sortTech(availableTech) {
+    let sortedTech = {
+        Restrict: [],
+        Neglect: [],
+        Neutral: [],
+        Prefer: [],
+        Focus: []
+    }
+    const faction = document.getElementById('factionSelect').value;
+
+    for(let tech of availableTech) {
+        for(let doctrine of Object.keys(factionParameters[faction].doctrineTags)) {
+            if(factionParameters[faction].doctrineTags[doctrine].includes(tech)) {
+                sortedTech[techPathValues[doctrine]].push(tech);
+            }
+        }
+    }
+
+    return sortedTech;
 }
 
 function findAvailableTech(techStages, techPrereqs) {
@@ -222,12 +449,46 @@ function generateNewResearchTree(userParams, factionParams) {
         }
 
         let firstTechName = null;
+        let totalTechThisTurn = advances;
         while (advances > 0) {
             potentialTech = findAvailableTech(techStages, factionParams.techMap);
             if (potentialTech.length === 0) {
                 break;
             }
 
+            let sortedTech = sortTech(potentialTech);
+
+            //If we're in the first half of the tech we learn this stage, exhaust focuses
+            if(totalTechThisTurn / 2 > advances && sortedTech["Focus"].length > 0) {
+                potentialTech = sortedTech["Focus"];
+            } else {
+                //Handle the case where we're only down to restricted tech
+                if(sortedTech["Focus"].length === 0 && sortedTech["Prefer"].length === 0 && sortedTech["Neutral"].length === 0 && sortedTech["Neglect"].length === 0 && sortedTech["Restrict"].length > 0){
+                    potentialTech = sortedTech["Restrict"];
+                } else {
+                    //Otherwise construct our weighted array to pick from the remaining tech
+                    let weightedArray = [];
+                    if(sortedTech["Focus"].length > 0) {
+                        weightedArray.push({element: sortedTech["Focus"], weight: 50});
+                    }
+                    if(sortedTech["Prefer"].length > 0) {
+                        weightedArray.push({element: sortedTech["Prefer"], weight: 25});
+                    }
+                    if(sortedTech["Neutral"].length > 0) {
+                        weightedArray.push({element: sortedTech["Neutral"], weight: 10});
+                    }
+                    if(sortedTech["Neglect"].length > 0) {
+                        weightedArray.push({element: sortedTech["Neglect"], weight: 5});
+                    }
+                    if(weightedArray.length === 0) {
+                        console.error("Missing tech in doctrines: " + JSON.stringify(findAvailableTech(techStages, factionParams.techMap)));
+                        throw new Error("Missing tech.");
+                    }
+                    
+                    potentialTech = getRandomElementByWeight(weightedArray);
+                }
+            }
+            
             let techIndex = Math.floor(Math.random() * potentialTech.length);
             let tech = potentialTech.splice(techIndex, 1)[0];
             techStages[tech] = currentStage;
@@ -237,6 +498,7 @@ function generateNewResearchTree(userParams, factionParams) {
             advances--;
         }
 
+        potentialTech = findAvailableTech(techStages, factionParams.techMap);
         currentStage++;
     }
 
@@ -272,17 +534,6 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
 
     return unitsFilePrepared;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const factionSelect = document.getElementById('factionSelect');
-  factionSelect.innerHTML = ''; // Clear existing options
-  Object.keys(factionParameters).forEach(faction => {
-    const option = document.createElement('option');
-    option.value = faction;
-    option.textContent = faction;
-    factionSelect.appendChild(option);
-  });
-});
 
 document.getElementById('toggleSpoiler').addEventListener('click', function() {
     const spoilerSection = document.getElementById('spoilerSection');
