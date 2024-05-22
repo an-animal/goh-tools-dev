@@ -303,7 +303,8 @@
         "75mm_leig18"
       ],
       "conquest_bf109": [
-        "squad_officer_con(ger)"
+        "squad_officer_con(ger)",
+        "conquest_fi156"
       ],
       "sdkfz6_ammo": [
         "blitz3_6_art_ammo"
@@ -431,7 +432,8 @@
         "blitz3_6_art_ammo"
       ],
       "conquest_bf110": [
-        "squad_officer_kubel_con"
+        "squad_officer_kubel_con",
+        "conquest_bf109"
       ],
       "squad_officer_con(ger)": [
         "single_officer(ger)"
