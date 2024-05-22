@@ -747,9 +747,9 @@
 	{action "airstrike:sc_250"}
 }
 
-{"fi156" {tags "conquest conquestonly"} {score 0} {cw 0} {cp 8} {cost 0} {not_for_sale 1}}
-{"bf109_f4" {tags "conquest conquestonly"} {score 0} {cw 0} {cp 9} {cost 0} {not_for_sale 1}}
-{"bf110_e2" {tags "conquest conquestonly"} {score 0} {cw 0} {cp 8} {cost 0} {not_for_sale 1}}
+{"fi156" {tags "conquest conquestonly"} {research_stage @conquest_fi156} {score 0} {cw 0} {cp 8} {cost 0} {not_for_sale 1}}
+{"bf109_f4" {tags "conquest conquestonly"} {research_stage @conquest_bf109} {score 0} {cw 0} {cp 9} {cost 0} {not_for_sale 1}}
+{"bf110_e2" {tags "conquest conquestonly"} {research_stage @conquest_bf110} {score 0} {cw 0} {cp 8} {cost 0} {not_for_sale 1}}
 
 
 {"80mm_sgrw34_mortar_barrage"
