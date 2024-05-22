@@ -549,6 +549,7 @@ function buildUnitsFileString(techStages, unitsFile, ignored, aliases) {
 
         // Since JavaScript strings are immutable, we need to build a new string with the updated value
         unitsFilePrepared = unitsFilePrepared.substring(0, techLevelIndex) + value + unitsFilePrepared.substring(techLevelIndexStop);
+        unitsFilePrepared = unitsFilePrepared.replaceAll(`@${key}`, `${value}`);
     });
 
     return unitsFilePrepared;
