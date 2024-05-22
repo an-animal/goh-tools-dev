@@ -157,6 +157,12 @@
             <input type="range" id="criticalStagesChanceSlider" min="0" max="100" value="0">
             <span id="criticalChanceValue">0%</span>
         </div>
+
+        <div class="setting">
+            <label for="skippedStagesChanceSlider">Skipped Stages Chance (No research occurs):</label>
+            <input type="range" id="skippedStagesChanceSlider" min="0" max="100" value="0">
+            <span id="skippedStagesChanceSlider">0%</span>
+        </div>
     </div>
     <div id="scopesContainer">
         <div id="techPathsPreferences">
@@ -250,6 +256,13 @@ var criticalChanceValue = document.getElementById('criticalChanceValue');
 
 criticalStagesChanceSlider.oninput = function() {
     criticalChanceValue.innerHTML = this.value + '%';
+}
+
+var skippedStagesChanceSlider = document.getElementById('skippedStagesChanceSlider');
+var skippedChanceValue = document.getElementById('skippedChanceValue');
+
+skippedStagesChanceSlider.oninput = function() {
+    skippedChanceValue.innerHTML = this.value + '%';
 }
 
 function generateTechPathPreferences(config) {
@@ -450,6 +463,12 @@ function generateNewResearchTree(userParams, factionParams) {
 
         let firstTechName = null;
         let totalTechThisTurn = advances;
+
+        let skipDie = Math.floor(Math.random() * 100);
+        if(skipDie >= 100 - userParams.skippedStagesCoefficient) {
+            advances = 0;
+        }
+        
         while (advances > 0) {
             potentialTech = findAvailableTech(techStages, factionParams.techMap);
             if (potentialTech.length === 0) {
@@ -564,12 +583,14 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const minTechPerStage = parseInt(techRange[0], 10); // Start value of the tech range slider
         const maxTechPerStage = parseInt(techRange[1], 10); // End value of the tech range slider
         const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
-    
+        const skippedStagesCoefficient = parseInt(document.getElementById('skippedStagesCoefficient').value, 10);
+        
         // Construct the userParams object
         const userParams = {
             minimumTechPerStage: minTechPerStage,
             maximumTechPerStage: maxTechPerStage,
-            criticalStagesCoefficient: criticalStagesCoefficient
+            criticalStagesCoefficient: criticalStagesCoefficient,
+            skippedStagesCoefficient: skippedStagesCoefficient
         };
     
         // Call the function with userParams and factionParams
