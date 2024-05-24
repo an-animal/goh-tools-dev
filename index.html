@@ -759,7 +759,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         }
 
         //campaign_capture_the_flag.set
-        const scoreToWin = document.getElementById('scoreToWinInput').value;
+        const scoreToWin = parseInt(document.getElementById('scoreToWinInput').value, 10);
         if(scoreToWin !== 1000) {
             const ctf = campaignCTF.replaceAll('${scoreFinal}', scoreToWin);
             const gamesFolder = multiplayerFolder.folder("games");
