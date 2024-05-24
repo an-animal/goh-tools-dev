@@ -758,8 +758,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
             scriptFolder.file("bot.data.lua", populatedDataLua);
         }
 
-        const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
-
+        //campaign_capture_the_flag.set
         const scoreToWin = document.getElementById('scoreToWinInput').value;
         if(scoreToWin !== 1000) {
             const ctf = campaignCTF.replaceAll('${scoreToWin}', scoreToWin);
