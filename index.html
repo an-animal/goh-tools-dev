@@ -260,7 +260,7 @@ function updateTechRangeValues(values) {
     document.getElementById('maxValue').textContent = values[1];
 }
 
-attackerDelaySlider.noUiSlider.on('update', function (values, handle) {
+techRangeSlider.noUiSlider.on('update', function (values, handle) {
     updateTechRangeValues(values);
 });
 
