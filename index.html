@@ -752,7 +752,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
             const populatedDataLua = botData.replaceAll('${attackMinMinutes}', minAttackerDelay)
                 .replaceAll('${attackMaxMinutes}', maxAttackerDelay)
                 .replaceAll('${waveMin}', minWaveSize)
-                .replaceAll('${waveMax}', maxWaveSizey);
+                .replaceAll('${waveMax}', maxWaveSize);
 
             const scriptFolder = resourceFolder.folder("script").folder("multiplayer");
             scriptFolder.file("bot.data.lua", populatedDataLua);
