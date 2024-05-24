@@ -629,7 +629,12 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const maxResearchStage = Math.max(...(Object.values(techStages)));
         console.log("Max research stage: " + maxResearchStage);
         const researchStages = Array.from({ length: maxResearchStage }, (value, index) => `${index}:${index + 1}`).join(' ');
-        conquestFolder.file("duration_unlimited.set", `{Unlimited\n\t{FlagCount "2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5"} ;// each entry is 1 game played. # of flags enabled : # of flags total on map\n\t{Bots\n\t\t{ResearchStages "${researchStages}"} ;// number of games played : research tree level bots can have\n\t}\n\t{MapSelection "0:1"}	;// number of games played : map selection value from map .info file\n\t{MapBorder "0:1"}\n}`);
+        
+        const flagsString = '2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5';
+
+        
+                
+        conquestFolder.file("duration_unlimited.set", `{Unlimited\n\t{FlagCount "${flagsString}"} ;// each entry is 1 game played. # of flags enabled : # of flags total on map\n\t{Bots\n\t\t{ResearchStages "${researchStages}"} ;// number of games played : research tree level bots can have\n\t}\n\t{MapSelection "0:1"}	;// number of games played : map selection value from map .info file\n\t{MapBorder "0:1"}\n}`);
         
         if(document.getElementById('unlockAllCampaigns').checked) {
             conquestFolder.file("values.set", valuesSet);
