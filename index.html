@@ -723,7 +723,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         const resourceFolder = modFolder.folder("resource");
         const setFolder = resourceFolder.folder("set");
-        const unitFolder = setFolder.folder("multiplayer").folder("units").folder("conquest");
+        const multiplayerFolder = setFolder.folder("multiplayer");
+        const unitFolder = multiplayerFolder.folder("units").folder("conquest");
         unitFolder.file(unitsFileName, unitsFileOutput);
 
         const conquestFolder = setFolder.folder("dynamic_campaign");
@@ -748,13 +749,6 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const maxWaveSizey = parseInt(waveSize[1], 10); 
 
         if(minAttackerDelay !== 6 || maxAttackerDelay !== 8 || minWaveSize !== 7 || maxWaveSize !== 10) {
-            const populatedDataLua = 
-        }
-
-        const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
-        const skippedStagesCoefficient = parseInt(document.getElementById('skippedStagesChanceSlider').value, 10);
-
-        if(document.getElementById().value) {
             const populatedDataLua = botData.replaceAll('${attackMinMinutes}', minAttackerDelay)
                 .replaceAll('${attackMaxMinutes}', maxAttackerDelay)
                 .replaceAll('${waveMin}', minWaveSize)
@@ -762,6 +756,15 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
             const scriptFolder = resourceFolder.folder("script").folder("multiplayer");
             scriptFolder.file("bot.data.lua", populatedDataLua);
+        }
+
+        const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
+
+        const scoreToWin = document.getElementById('scoreToWinInput').value;
+        if(scoreToWin !== 1000) {
+            const ctf = campaignCTF.replaceAll('${scoreToWin}', scoreToWin);
+            const gamesFolder = multiplayerFolder.folder("games");
+            gamesFolder.file("campaign_capture_the_flag.set", ctf);
         }
         
         // Generate the zip file and trigger a dwnload
