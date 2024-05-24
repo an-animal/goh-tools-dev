@@ -320,7 +320,7 @@ noUiSlider.create(attackerDelaySlider, {
 function updateAttackDelay(values) {
     document.getElementById('minAttackDelayValue').textContent = values[0];
     document.getElementById('maxAttackDelayValue').textContent = values[1];
-    document.getElementById('scoreToWinRecommendedValue').textContent = (values[1] * 35) + 1000;
+    document.getElementById('scoreToWinRecommendedValue').textContent = ((8 - values[1]) * 35) + 1000;
 }
 
 attackerDelaySlider.noUiSlider.on('update', function (values, handle) {
