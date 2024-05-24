@@ -170,6 +170,12 @@
             <label for="unlockAllCampaigns">Unlock All Factions/Fronts:</label>
             <input type="checkbox" id="unlockAllCampaigns" value="0">
         </div>
+
+        <div class="setting">
+            <label for="attackerDelaySlider">Bot Attacker Delay (Minutes):</label>
+            <div id="attackerDelaySlider"></div>
+            <p id="techRangeValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
+        </div>
     </div>
     <div id="scopesContainer">
         <div id="techPathsPreferences">
@@ -254,8 +260,36 @@ function updateTechRangeValues(values) {
     document.getElementById('maxValue').textContent = values[1];
 }
 
-techRangeSlider.noUiSlider.on('update', function (values, handle) {
+attackerDelaySlider.noUiSlider.on('update', function (values, handle) {
     updateTechRangeValues(values);
+});
+
+var attackerDelaySlider = document.getElementById('attackerDelaySlider');
+
+noUiSlider.create(attackerDelaySlider, {
+    start: [6, 8], 
+    connect: true,
+    range: {
+        'min': 1,
+        'max': 30
+    },
+    format: {
+      to: function (value) {
+        return value.toFixed(0);
+      },
+      from: function (value) {
+        return Number(value);
+      }
+    }
+});
+
+function updateAttackDelay(values) {
+    document.getElementById('minAttackDelayValue').textContent = values[0];
+    document.getElementById('maxAttackDelayValue').textContent = values[1];
+}
+
+attackerDelaySlider.noUiSlider.on('update', function (values, handle) {
+    updateAttackDelay(values);
 });
 
 // Handle Critical Stages Chance slider changes
