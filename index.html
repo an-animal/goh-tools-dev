@@ -194,6 +194,11 @@
         </div>
 
         <div class="setting">
+            <label for="permanentCorpse">Prevent Corpse/Weapon Despawn:</label>
+            <input type="checkbox" id="permanentCorpse" value="0">
+        </div>
+
+        <div class="setting">
             <label for="attackerDelaySlider">Bot Attacker Delay (Minutes):</label>
             <div id="attackerDelaySlider"></div>
             <p id="attackerDelayValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
@@ -258,6 +263,7 @@ const factionParameters = await (await fetch('config.json')).json();
 const valuesSet = await (await fetch('values.set')).text();
 const botData = await (await fetch('bot.data.lua')).text();
 const campaignCTF = await (await fetch('campaign_capture_the_flag.set')).text();
+const entityManager = await (await fetch('entitymanager.set')).text();
     
 await domLoaded;
 console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
@@ -738,6 +744,10 @@ document.getElementById('generateMod').addEventListener('click', function() {
         
         if(document.getElementById('unlockAllCampaigns').checked) {
             conquestFolder.file("values.set", valuesSet);
+        }
+
+        if(document.getElementById('permanentCorpse').checked) {
+            setFolder.file("entitymanager.set", valuesSet);
         }
 
         //bot.data.lua
