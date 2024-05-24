@@ -746,7 +746,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const maxAttackerDelay = parseInt(attackerDelay[1], 10);
         const waveSize = attackerWaveSlider.noUiSlider.get();
         const minWaveSize = parseInt(waveSize[0], 10);
-        const maxWaveSizey = parseInt(waveSize[1], 10); 
+        const maxWaveSize = parseInt(waveSize[1], 10); 
 
         if(minAttackerDelay !== 6 || maxAttackerDelay !== 8 || minWaveSize !== 7 || maxWaveSize !== 10) {
             const populatedDataLua = botData.replaceAll('${attackMinMinutes}', minAttackerDelay)
