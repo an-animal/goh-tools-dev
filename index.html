@@ -761,7 +761,7 @@ document.getElementById('generateMod').addEventListener('click', function() {
         //campaign_capture_the_flag.set
         const scoreToWin = document.getElementById('scoreToWinInput').value;
         if(scoreToWin !== 1000) {
-            const ctf = campaignCTF.replaceAll('${scoreToWin}', scoreToWin);
+            const ctf = campaignCTF.replaceAll('${scoreFinal}', scoreToWin);
             const gamesFolder = multiplayerFolder.folder("games");
             gamesFolder.file("campaign_capture_the_flag.set", ctf);
         }
