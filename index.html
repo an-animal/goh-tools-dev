@@ -40,6 +40,17 @@
         background: #009688;
     }
 
+    #attackerWaveSlider {
+        max-width: 400px; /* Control the width without centering */
+        margin-top: 20px; /* Add space above the slider */
+    }
+    #attackerWaveSlider .noUi-handle {
+
+    }
+    #attackerWaveSlider .noUi-connect {
+        background: #009688;
+    }
+
     .generate-button {
         display: inline-block;
         background-color: #4CAF50;
@@ -187,6 +198,12 @@
             <div id="attackerDelaySlider"></div>
             <p id="attackerDelayValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
         </div>
+
+        <div class="setting">
+            <label for="attackerWaveSlider">Attacker Wave Size:</label>
+            <div id="attackerWaveSlider"></div>
+            <p id="attackerWaveSlider">Attackers will spawn after <span id="minAttackWaveValue"></span> - <span id="maxAttackWaveValue"></span> minutes.</p>
+        </div>
     </div>
     <div id="scopesContainer">
         <div id="techPathsPreferences">
@@ -301,6 +318,34 @@ function updateAttackDelay(values) {
 
 attackerDelaySlider.noUiSlider.on('update', function (values, handle) {
     updateAttackDelay(values);
+});
+
+var attackerWaveSlider = document.getElementById('attackerWaveSlider');
+
+noUiSlider.create(attackerWaveSlider, {
+    start: [6, 8], 
+    connect: true,
+    range: {
+        'min': 1,
+        'max': 30
+    },
+    format: {
+      to: function (value) {
+        return value.toFixed(0);
+      },
+      from: function (value) {
+        return Number(value);
+      }
+    }
+});
+
+function updateAttackWave(values) {
+    document.getElementById('minAttackWaveValue').textContent = values[0];
+    document.getElementById('maxAttackWaveValue').textContent = values[1];
+}
+
+attackerWaveSlider.noUiSlider.on('update', function (values, handle) {
+    updateAttackWave(values);
 });
 
 // Handle Critical Stages Chance slider changes
