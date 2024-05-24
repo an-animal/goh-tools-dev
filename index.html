@@ -29,6 +29,17 @@
     #techRangeSlider .noUi-connect {
         background: #009688;
     }
+    #attackerDelaySlider {
+        max-width: 400px; /* Control the width without centering */
+        margin-top: 20px; /* Add space above the slider */
+    }
+    #attackerDelaySlider .noUi-handle {
+
+    }
+    #attackerDelaySlider .noUi-connect {
+        background: #009688;
+    }
+
     .generate-button {
         display: inline-block;
         background-color: #4CAF50;
@@ -174,7 +185,7 @@
         <div class="setting">
             <label for="attackerDelaySlider">Bot Attacker Delay (Minutes):</label>
             <div id="attackerDelaySlider"></div>
-            <p id="techRangeValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
+            <p id="attackerDelayValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
         </div>
     </div>
     <div id="scopesContainer">
