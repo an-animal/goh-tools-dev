@@ -256,6 +256,9 @@ const domLoaded = new Promise((resolve, reject) => {
 
 const factionParameters = await (await fetch('config.json')).json();
 const valuesSet = await (await fetch('values.set')).text();
+const botData = await (await fetch('bot.data.lua')).text();
+const campaignCTF = await (await fetch('campaign_capture_the_flag.set')).text();
+    
 await domLoaded;
 console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
 
@@ -718,7 +721,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         modFolder.file("mod.info", `{mod\n\t{name "${modName}"}\n\n\t{desc "This mod slows the pace of conquest research for the enemy AI."}\n\t{minGameVersion "1.037.0"}\n\t{maxGameVersion "1.200.0"}\n}`);
 
-        const setFolder = modFolder.folder("resource").folder("set");
+        const resourceFolder = modFolder.folder("resource");
+        const setFolder = resourceFolder.folder("set");
         const unitFolder = setFolder.folder("multiplayer").folder("units").folder("conquest");
         unitFolder.file(unitsFileName, unitsFileOutput);
 
@@ -728,13 +732,36 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const researchStages = Array.from({ length: maxResearchStage }, (value, index) => `${index}:${index + 1}`).join(' ');
         
         const flagsString = '2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5';
-
-        
-                
+               
         conquestFolder.file("duration_unlimited.set", `{Unlimited\n\t{FlagCount "${flagsString}"} ;// each entry is 1 game played. # of flags enabled : # of flags total on map\n\t{Bots\n\t\t{ResearchStages "${researchStages}"} ;// number of games played : research tree level bots can have\n\t}\n\t{MapSelection "0:1"}	;// number of games played : map selection value from map .info file\n\t{MapBorder "0:1"}\n}`);
         
         if(document.getElementById('unlockAllCampaigns').checked) {
             conquestFolder.file("values.set", valuesSet);
+        }
+
+        //bot.data.lua
+        const attackerDelay = attackerDelaySlider.noUiSlider.get();
+        const minAttackerDelay = parseInt(attackerDelay[0], 10);
+        const maxAttackerDelay = parseInt(attackerDelay[1], 10);
+        const waveSize = attackerWaveSlider.noUiSlider.get();
+        const minWaveSize = parseInt(waveSize[0], 10);
+        const maxWaveSizey = parseInt(waveSize[1], 10); 
+
+        if(minAttackerDelay !== 6 || maxAttackerDelay !== 8 || minWaveSize !== 7 || maxWaveSize !== 10) {
+            const populatedDataLua = 
+        }
+
+        const criticalStagesCoefficient = parseInt(document.getElementById('criticalStagesChanceSlider').value, 10);
+        const skippedStagesCoefficient = parseInt(document.getElementById('skippedStagesChanceSlider').value, 10);
+
+        if(document.getElementById().value) {
+            const populatedDataLua = botData.replaceAll('${attackMinMinutes}', minAttackerDelay)
+                .replaceAll('${attackMaxMinutes}', maxAttackerDelay)
+                .replaceAll('${waveMin}', minWaveSize)
+                .replaceAll('${waveMax}', maxWaveSizey);
+
+            const scriptFolder = resourceFolder.folder("script").folder("multiplayer");
+            scriptFolder.file("bot.data.lua", populatedDataLua);
         }
         
         // Generate the zip file and trigger a dwnload
