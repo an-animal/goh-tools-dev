@@ -266,7 +266,6 @@ const campaignCTF = await (await fetch('campaign_capture_the_flag.set')).text();
 const entityManager = await (await fetch('entitymanager.set')).text();
     
 await domLoaded;
-console.log("Loaded faction parameters: " + JSON.stringify(factionParameters))
 
 generateTechPathPreferences({"techPaths": Object.keys(factionParameters[document.getElementById('factionSelect').value].doctrineTags)});
 const factionSelect = document.getElementById('factionSelect');
@@ -381,7 +380,6 @@ skippedStagesChanceSlider.oninput = function() {
 
 function generateTechPathPreferences(config) {
   techPathValues = {};
-  console.log("Generating tech path preferences...");
   const container = document.getElementById('techPathsPreferences');
   const preferencesTopDiv = document.createElement('div');
   preferencesTopDiv.className = 'preferences';
@@ -429,8 +427,6 @@ function generateTechPathPreferences(config) {
         
         // Optional: Update some state or perform an action based on selection
         techPathValues[path] = preference;
-
-        console.log(JSON.stringify(techPathValues));
       });
 
       preferencesDiv.appendChild(optionDiv);
@@ -711,14 +707,9 @@ document.getElementById('generateMod').addEventListener('click', function() {
         // Call the function with userParams and factionParams
         const techStages = generateNewResearchTree(userParams, factionParams);
     
-        // Do something with techStages, e.g., display the results to the user
-        console.log(techStages);
-
         generateTechTable(techStages);
 
         const unitsFileOutput = buildUnitsFileString(techStages, data, factionParams.ignored, factionParams.aliases);
-
-        console.log(unitsFileOutput);
 
         // Create a new JSZip instance
         var zip = new JSZip();
@@ -735,7 +726,6 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         const conquestFolder = setFolder.folder("dynamic_campaign");
         const maxResearchStage = Math.max(...(Object.values(techStages)));
-        console.log("Max research stage: " + maxResearchStage);
         const researchStages = Array.from({ length: maxResearchStage }, (value, index) => `${index}:${index + 1}`).join(' ');
         
         const flagsString = '2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 2:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5 3:5';
