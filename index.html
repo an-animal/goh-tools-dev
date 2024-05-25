@@ -826,10 +826,11 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const enemyAttackMultiplier = parseFloat(document.getElementById('enemyAttackMultiplier').value);
 
         const mpString = `{StartMP	${enemyMPMultiplier} min ${enemyMinimumMP} attackerMultiplier ${enemyAttackMultiplier}}`;
-        let resourcesVeryHigh = resourcesVeryHighOriginal.replaceAll(/\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/, mpString);
-        let resourcesHigh = resourcesHighOriginal.replaceAll(/\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/, mpString);
-        let resourcesStandard = resourcesStandardOriginal.replaceAll(/\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/, mpString);
-        let resourcesLow = resourcesLowOriginal.replaceAll(/\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/, mpString);
+        const mpRegex = /\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/g;
+        let resourcesVeryHigh = resourcesVeryHighOriginal.replaceAll(mpRegex, mpString);
+        let resourcesHigh = resourcesHighOriginal.replaceAll(mpRegex, mpString);
+        let resourcesStandard = resourcesStandardOriginal.replaceAll(mpRegex, mpString);
+        let resourcesLow = resourcesLowOriginal.replaceAll(mpRegex, mpString);
         
         const fullRefund = document.getElementById('fullRefund').checked;
         if(fullRefund) { 
