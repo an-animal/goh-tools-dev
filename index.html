@@ -212,7 +212,12 @@
                 <label for="unlockAllCampaigns">Unlock All Factions/Fronts:</label>
                 <input type="checkbox" id="unlockAllCampaigns" value="0">
             </div>
-    
+
+            <div class="setting">
+                <label for="unlockAllMaps">All Fronts Use All Maps:</label>
+                <input type="checkbox" id="unlockAllMaps" value="0">
+            </div>
+            
             <div class="setting">
                 <label for="permanentCorpse">Prevent Corpse/Weapon Despawn:</label>
                 <input type="checkbox" id="permanentCorpse" value="0">
@@ -319,6 +324,7 @@ const resourcesVeryHighOriginal = await (await fetch('resources_very_high.set'))
 const resourcesHighOriginal = await (await fetch('resources_high.set')).text();
 const resourcesStandardOriginal = await (await fetch('resources_standard.set')).text();
 const resourcesLowOriginal = await (await fetch('resources_low.set')).text();
+const mapPoints = await (await fetch('map_points.set')).text(); 
     
 await domLoaded;
 
@@ -793,6 +799,10 @@ document.getElementById('generateMod').addEventListener('click', function() {
 
         if(document.getElementById('permanentCorpse').checked) {
             setFolder.file("entitymanager.set", entityManager);
+        }
+
+        if(document.getElementById('unlockAllMaps').checked) {
+            conquestFolder.file("map_points.set", mapPoints);
         }
 
         //bot.data.lua
