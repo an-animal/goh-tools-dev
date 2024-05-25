@@ -223,7 +223,7 @@
         <h3>Enemy Strength</h3>
         <div class="setting">
             <label for="enemyMPMultiplier">MP Multiplier:</label>
-            <input type="number" id="enemyMPMultiplier" name="enemyMPMultiplier" min="0" max="10.00" value="1.00" step=0.1>
+            <input type="number" id="enemyMPMultiplier" name="enemyMPMultiplier" min="0" max="10.00" value="1.50" step=0.1>
         </div>
 
         <div class="setting">
@@ -315,6 +315,10 @@ const valuesSet = await (await fetch('values.set')).text();
 const botData = await (await fetch('bot.data.lua')).text();
 const campaignCTF = await (await fetch('campaign_capture_the_flag.set')).text();
 const entityManager = await (await fetch('entitymanager.set')).text();
+const resourcesVeryHigh = await (await fetch('resources_very_high.set')).text();
+const resourcesHigh = await (await fetch('resources_high.set')).text();
+const resourcesStandard = await (await fetch('resources_standard.set')).text();
+const resourcesLow = await (await fetch('resources_low.set')).text();
     
 await domLoaded;
 
@@ -816,6 +820,69 @@ document.getElementById('generateMod').addEventListener('click', function() {
             const gamesFolder = multiplayerFolder.folder("games");
             gamesFolder.file("campaign_capture_the_flag.set", ctf);
         }
+
+        const enemyMPMultiplier = parseFloat(document.getElementById('enemyMPMultiplier').value);      
+        const enemyMinimumMP = parseInt(document.getElementById('enemyMinimumMP').value);
+        const enemyAttackMultiplier = parseFloat(document.getElementById('enemyAttackMultiplier').value);
+
+        const mpString = `{StartMP	${enemyMPMultiplier} min ${enemyMinimumMP} attackerMultiplier ${enemyAttackMultiplier}}`;
+        resourcesVeryHigh = resourcesVeryHigh.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        resourcesHigh = resourcesHigh.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        resourcesStandard = resourcesStandard.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        resourcesLow = resourcesLow.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        
+        const fullRefund = document.getElementById('fullRefund').checked;
+        if(fullRefund) { 
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
+            resourcesHigh = resourcesHigh.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
+            resourcesStandard = resourcesStandard.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
+            resourcesLow = resourcesLow.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
+        }
+        
+        const noPayback = document.getElementById('noPayback').checked;
+        if(noPayback) { 
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
+            resourcesHigh = resourcesHigh.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
+            resourcesStandard = resourcesStandard.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
+            resourcesLow = resourcesLow.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
+        }
+        
+        const freeCaptures  = document.getElementById('freeCaptures').checked;
+        if(freeCaptures) { 
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
+            resourcesHigh = resourcesHigh.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
+            resourcesStandard = resourcesStandard.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
+            resourcesLow = resourcesLow.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
+        }
+        
+        const freeAirSupport  = document.getElementById('freeAirSupport').checked;
+        if(freeAirSupport) { 
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('Airstrikes 100 % SP', 'Airstrikes 0 % SP');
+            resourcesHigh = resourcesHigh.replaceAll('Airstrikes 100 % SP', 'Airstrikes 0 % SP');
+            resourcesStandard = resourcesStandard.replaceAll('Airstrikes 100 % SP', 'Airstrikes 0 % SP');
+            resourcesLow = resourcesLow.replaceAll('Airstrikes 100 % SP', 'Airstrikes 0 % SP');
+        }
+        
+        const maxSupportCP = parseInt(document.getElementById('maxSupportCP').value);
+        if(maxSupportCP !== 50) {
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{SpecialCP 50}', `{SpecialCP ${maxSupportCP}}`);
+            resourcesHigh = resourcesHigh.replaceAll('{SpecialCP 50}', `{SpecialCP ${maxSupportCP}}`);
+            resourcesStandard = resourcesStandard.replaceAll('{SpecialCP 50}', `{SpecialCP ${maxSupportCP}}`);
+            resourcesLow = resourcesLow.replaceAll('{SpecialCP 50}', `{SpecialCP ${maxSupportCP}}`);
+        }
+        
+        const maxEngineerCP = parseFloat(document.getElementById('maxEngineerCP').value);
+        if(maxEngineerCP !== 50) {
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{EmplacementCP 50}', `{EmplacementCP ${maxEngineerCP}}`);
+            resourcesHigh = resourcesHigh.replaceAll('{EmplacementCP 50}', `{EmplacementCP ${maxEngineerCP}}`);
+            resourcesStandard = resourcesStandard.replaceAll('{EmplacementCP 50}', `{EmplacementCP ${maxEngineerCP}}`);
+            resourcesLow = resourcesLow.replaceAll('{EmplacementCP 50}', `{EmplacementCP ${maxEngineerCP}}`);
+        }
+
+        conquestFolder.file('resources_very_high.set', resourcesVeryHigh);
+        conquestFolder.file('resources_high.set', resourcesHigh);
+        conquestFolder.file('resources_standard.set', resourcesStandard);
+        conquestFolder.file('resources_low.set', resourcesLow);
         
         // Generate the zip file and trigger a dwnload
         zip.generateAsync({type:"blob"})
