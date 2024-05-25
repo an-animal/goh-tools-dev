@@ -843,18 +843,20 @@ document.getElementById('generateMod').addEventListener('click', function() {
         
         const noPayback = document.getElementById('noPayback').checked;
         if(noPayback) { 
-            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
-            resourcesHigh = resourcesHigh.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
-            resourcesStandard = resourcesStandard.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
-            resourcesLow = resourcesLow.replaceAll('{PaybackFactor 0.4}', '{PaybackFactor 0.0}');
+            const regex = /{PaybackFactor ([0-9|\.]*)}/g;
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll(regex, '{PaybackFactor 0.0}');
+            resourcesHigh = resourcesHigh.replaceAll(regex, '{PaybackFactor 0.0}');
+            resourcesStandard = resourcesStandard.replaceAll(regex, '{PaybackFactor 0.0}');
+            resourcesLow = resourcesLow.replaceAll(regex, '{PaybackFactor 0.0}');
         }
         
         const freeCaptures  = document.getElementById('freeCaptures').checked;
         if(freeCaptures) { 
-            resourcesVeryHigh = resourcesVeryHigh.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
-            resourcesHigh = resourcesHigh.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
-            resourcesStandard = resourcesStandard.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
-            resourcesLow = resourcesLow.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
+            const regex = /{ScavengedVehicleSellFactor ([0-9|\.]*)}/g;
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll(regex, '{ScavengedVehicleSellFactor 0.0}');
+            resourcesHigh = resourcesHigh.replaceAll(regex, '{ScavengedVehicleSellFactor 0.0}');
+            resourcesStandard = resourcesStandard.replaceAll(regex, '{ScavengedVehicleSellFactor 0.0}');
+            resourcesLow = resourcesLow.replaceAll(regex, '{ScavengedVehicleSellFactor 0.0}');
         }
         
         const freeAirSupport  = document.getElementById('freeAirSupport').checked;
