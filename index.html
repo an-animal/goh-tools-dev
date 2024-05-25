@@ -825,8 +825,8 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const enemyMinimumMP = parseInt(document.getElementById('enemyMinimumMP').value);
         const enemyAttackMultiplier = parseFloat(document.getElementById('enemyAttackMultiplier').value);
 
-        const mpString = `{StartMP	${enemyMPMultiplier} min ${enemyMinimumMP} attackerMultiplier ${enemyAttackMultiplier}}`;
-        const mpRegex = /\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/g;
+        const mpString = `{$1	${enemyMPMultiplier} min ${enemyMinimumMP} attackerMultiplier ${enemyAttackMultiplier}}`;
+        const mpRegex = /\{(StartMP|FinishMP)\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}/g;
         let resourcesVeryHigh = resourcesVeryHighOriginal.replaceAll(mpRegex, mpString);
         let resourcesHigh = resourcesHighOriginal.replaceAll(mpRegex, mpString);
         let resourcesStandard = resourcesStandardOriginal.replaceAll(mpRegex, mpString);
