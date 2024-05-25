@@ -315,10 +315,10 @@ const valuesSet = await (await fetch('values.set')).text();
 const botData = await (await fetch('bot.data.lua')).text();
 const campaignCTF = await (await fetch('campaign_capture_the_flag.set')).text();
 const entityManager = await (await fetch('entitymanager.set')).text();
-const resourcesVeryHigh = await (await fetch('resources_very_high.set')).text();
-const resourcesHigh = await (await fetch('resources_high.set')).text();
-const resourcesStandard = await (await fetch('resources_standard.set')).text();
-const resourcesLow = await (await fetch('resources_low.set')).text();
+const resourcesVeryHighOriginal = await (await fetch('resources_very_high.set')).text();
+const resourcesHighOriginal = await (await fetch('resources_high.set')).text();
+const resourcesStandardOriginal = await (await fetch('resources_standard.set')).text();
+const resourcesLowOriginal = await (await fetch('resources_low.set')).text();
     
 await domLoaded;
 
@@ -826,10 +826,10 @@ document.getElementById('generateMod').addEventListener('click', function() {
         const enemyAttackMultiplier = parseFloat(document.getElementById('enemyAttackMultiplier').value);
 
         const mpString = `{StartMP	${enemyMPMultiplier} min ${enemyMinimumMP} attackerMultiplier ${enemyAttackMultiplier}}`;
-        resourcesVeryHigh = resourcesVeryHigh.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
-        resourcesHigh = resourcesHigh.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
-        resourcesStandard = resourcesStandard.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
-        resourcesLow = resourcesLow.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        let resourcesVeryHigh = resourcesVeryHighOriginal.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        let resourcesHigh = resourcesHighOriginal.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        let resourcesStandard = resourcesStandardOriginal.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
+        let resourcesLow = resourcesLowOriginal.replaceAll('\{StartMP\s+([0-9|\.]*) min ([0-9]*) attackerMultiplier ([0-9|\.]*)}', mpString);
         
         const fullRefund = document.getElementById('fullRefund').checked;
         if(fullRefund) { 
