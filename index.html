@@ -187,34 +187,69 @@
             <span id="skippedChanceValue">0%</span>
         </div>
 
-        <h3>Battle</h3>
+        <div>
+            <h3>Battle</h3>
+            <div class="setting">
+                <label for="attackerDelaySlider">Bot Attacker Delay (Minutes):</label>
+                <div id="attackerDelaySlider"></div>
+                <p id="attackerDelayValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
+            </div>
+    
+            <div class="setting">
+                <label for="scoreToWinInput">Score to win:</label>
+                <input type="number" id="scoreToWinInput" name="scoreToWinInput" min="500" max="5000" value="1000">
+                <p id="attackerDelayRecommendation">Recommend setting score to win to at least <span id="scoreToWinRecommendedValue"></span>.</p>
+            </div>
+    
+            <div class="setting">
+                <label for="attackerWaveSlider">Attacker Wave Size:</label>
+                <div id="attackerWaveSlider"></div>
+                <p id="attackerWaveSlider">Attackers will spawn in waves of <span id="minAttackWaveValue"></span> - <span id="maxAttackWaveValue"></span> units</p>
+            </div>
+    
+            <h3>Miscellaneous</h3>
+            <div class="setting">
+                <label for="unlockAllCampaigns">Unlock All Factions/Fronts:</label>
+                <input type="checkbox" id="unlockAllCampaigns" value="0">
+            </div>
+    
+            <div class="setting">
+                <label for="permanentCorpse">Prevent Corpse/Weapon Despawn:</label>
+                <input type="checkbox" id="permanentCorpse" value="0">
+            </div>
+        </div>
+    </div>
+    <div>
+        <h3>Enemy Strength</h3>
         <div class="setting">
-            <label for="attackerDelaySlider">Bot Attacker Delay (Minutes):</label>
-            <div id="attackerDelaySlider"></div>
-            <p id="attackerDelayValues">Attackers will spawn after <span id="minAttackDelayValue"></span> - <span id="maxAttackDelayValue"></span> minutes.</p>
+            <label for="enemyMPMultiplier">MP Multiplier:</label>
+            <input type="number" id="enemyMPMultiplier" name="enemyMPMultiplier" min="0" max="10.00" value="1.00" step=0.1>
         </div>
 
         <div class="setting">
-            <label for="scoreToWinInput">Score to win:</label>
-            <input type="number" id="scoreToWinInput" name="scoreToWinInput" min="500" max="5000" value="1000">
-            <p id="attackerDelayRecommendation">Recommend setting score to win to at least <span id="scoreToWinRecommendedValue"></span>.</p>
+            <label for="enemyMinimumMP">Minimum MP:</label>
+            <input type="number" id="enemyMinimumMP" name="enemyMinimumMP" min="0" max="5000" value="500" step=50>
         </div>
 
         <div class="setting">
-            <label for="attackerWaveSlider">Attacker Wave Size:</label>
-            <div id="attackerWaveSlider"></div>
-            <p id="attackerWaveSlider">Attackers will spawn in waves of <span id="minAttackWaveValue"></span> - <span id="maxAttackWaveValue"></span> units</p>
+            <label for="enemyAttackMultiplier">Attacker Multiplier:</label>
+            <input type="number" id="enemyAttackMultiplier" name="enemyAttackMultiplier" min="0" max="10.00" value="1.50" step=0.1>
+        </div>
+        
+        <h3>Player Strength</h3>
+        <div class="setting">
+            <label for="freeAirSupport">Free Air Support Resupply:</label>
+            <input type="checkbox" id="freeAirSupport" value="0">
         </div>
 
-        <h3>Miscellaneous</h3>
         <div class="setting">
-            <label for="unlockAllCampaigns">Unlock All Factions/Fronts:</label>
-            <input type="checkbox" id="unlockAllCampaigns" value="0">
+            <label for="maxSupportCP">Max Support CP:</label>
+            <input type="number" id="maxSupportCP" name="maxSupportCP" min="0" max="500" value="50" step=10>
         </div>
 
         <div class="setting">
-            <label for="permanentCorpse">Prevent Corpse/Weapon Despawn:</label>
-            <input type="checkbox" id="permanentCorpse" value="0">
+            <label for="maxEngineerCP">Max Engineer Build CP:</label>
+            <input type="number" id="maxEngineerCP" name="maxEngineerCP" min="0" max="500" value="50" step=10>
         </div>
     </div>
     <div id="scopesContainer">
