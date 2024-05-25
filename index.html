@@ -834,10 +834,11 @@ document.getElementById('generateMod').addEventListener('click', function() {
         
         const fullRefund = document.getElementById('fullRefund').checked;
         if(fullRefund) { 
-            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
-            resourcesHigh = resourcesHigh.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
-            resourcesStandard = resourcesStandard.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
-            resourcesLow = resourcesLow.replaceAll('{SellFactor 0.6}', '{SellFactor 1.0}');
+            const regex = /{SellFactor ([0-9|\.]*)}/g;
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll(regex, '{SellFactor 1.0}');
+            resourcesHigh = resourcesHigh.replaceAll(regex, '{SellFactor 1.0}');
+            resourcesStandard = resourcesStandard.replaceAll(regex, '{SellFactor 1.0}');
+            resourcesLow = resourcesLow.replaceAll(regex, '{SellFactor 1.0}');
         }
         
         const noPayback = document.getElementById('noPayback').checked;
@@ -850,10 +851,10 @@ document.getElementById('generateMod').addEventListener('click', function() {
         
         const freeCaptures  = document.getElementById('freeCaptures').checked;
         if(freeCaptures) { 
-            resourcesVeryHigh = resourcesVeryHigh.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
-            resourcesHigh = resourcesHigh.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
-            resourcesStandard = resourcesStandard.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
-            resourcesLow = resourcesLow.replaceAll('{ScavengedVehicleSellFactor 0.6}', '{ScavengedVehicleSellFactor 0.0}');
+            resourcesVeryHigh = resourcesVeryHigh.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
+            resourcesHigh = resourcesHigh.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
+            resourcesStandard = resourcesStandard.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
+            resourcesLow = resourcesLow.replaceAll('ScavengedVehicleSellFactor 0.6', 'ScavengedVehicleSellFactor 0.0');
         }
         
         const freeAirSupport  = document.getElementById('freeAirSupport').checked;
